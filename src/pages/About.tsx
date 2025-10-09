@@ -11,9 +11,8 @@ const About: React.FC = () => {
   ]
 
   const timeline = [
-    { year: '2024', title: 'Frontend Developer', company: 'Perusahaan Teknologi', icon: <Briefcase className="w-5 h-5" /> },
-    { year: '2023', title: 'UI/UX Designer', company: 'Studio Desain', icon: <Briefcase className="w-5 h-5" /> },
-    { year: '2021', title: 'Sarjana Ilmu Komputer', company: 'Universitas', icon: <GraduationCap className="w-5 h-5" /> }
+    { year: '2023', title: 'SMK Negeri 2 Magelang', company: 'Sekolah Menengah Kejuruan', icon: <GraduationCap className="w-5 h-5" /> },
+    { year: '2020', title: 'SMP Negeri 1 Tegalrejo', company: 'Sekolah Menengah Pertama', icon: <GraduationCap className="w-5 h-5" /> }
   ]
 
   return (
@@ -108,7 +107,7 @@ const About: React.FC = () => {
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
       >
-        <h2 className="text-2xl font-bold mb-8 text-center">Pengalaman & Pendidikan</h2>
+        <h2 className="text-2xl font-bold mb-8 text-center">Pendidikan</h2>
         <div className="space-y-6">
           {timeline.map((item, idx) => (
             <motion.div

@@ -9,19 +9,56 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   return (
     <Tooltip.Provider>
       <motion.article
-        whileHover={{ y: -8 }}
-        transition={{ duration: 0.3 }}
-        className="glass rounded-2xl p-6 hover:shadow-2xl transition-all duration-300 group h-full flex flex-col"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        whileHover={{ 
+          y: -12, 
+          scale: 1.02,
+          boxShadow: "0 25px 50px rgba(168, 85, 247, 0.15)",
+          transition: { duration: 0.3, type: "spring", stiffness: 300 }
+        }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ duration: 0.5 }}
+        className="glass rounded-2xl p-6 hover:shadow-2xl transition-all duration-300 group h-full flex flex-col overflow-hidden relative"
       >
         {/* Project Image Placeholder */}
-        <div className="w-full h-48 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-          <div className="text-6xl opacity-50">🚀</div>
-        </div>
+        <motion.div 
+          className="w-full h-48 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-xl mb-4 flex items-center justify-center overflow-hidden relative"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.div 
+            className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-pink-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          />
+          <motion.div 
+            className="text-6xl opacity-50 relative z-10"
+            animate={{ 
+              rotate: [0, 5, -5, 0],
+              scale: [1, 1.1, 1]
+            }}
+            transition={{ 
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            🚀
+          </motion.div>
+        </motion.div>
 
         {/* Title */}
-        <h3 className="text-xl font-bold mb-2 group-hover:gradient-text transition-all">
+        <motion.h3 
+          className="text-xl font-bold mb-2 transition-all"
+          whileHover={{ 
+            backgroundImage: "linear-gradient(45deg, #8b5cf6, #ec4899)",
+            backgroundClip: "text",
+            color: "transparent",
+            scale: 1.05
+          }}
+          transition={{ duration: 0.2 }}
+        >
           {project.title}
-        </h3>
+        </motion.h3>
 
         {/* Summary */}
         <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 flex-1">
