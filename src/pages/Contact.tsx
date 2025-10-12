@@ -1,12 +1,19 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, MessageSquare, Send, CheckCircle, Github, Linkedin, Twitter } from 'lucide-react'
+import HeroPortrait from '../components/HeroPortrait'
+import ScatteredPhotos from '../components/ScatteredPhotos'
+import { useLanguage } from '../context/LanguageContext'
 
 const Contact: React.FC = () => {
+  const { t } = useLanguage()
   const [submitted, setSubmitted] = useState(false)
 
   return (
     <div className="mx-auto max-w-5xl space-y-12">
+      {/* Scattered photos background */}
+      <ScatteredPhotos />
+      
       {/* Header */}
       <motion.section
         initial={{ opacity: 0, y: 20 }}
@@ -14,11 +21,14 @@ const Contact: React.FC = () => {
         transition={{ duration: 0.5 }}
         className="text-center"
       >
-        <h1 className="text-4xl md:text-5xl font-bold mb-6">
-          Get In <span className="gradient-text">Touch</span>
-        </h1>
+        <div className="flex flex-col items-center gap-6 mb-2">
+          <HeroPortrait size={180} />
+          <h1 className="text-4xl md:text-5xl font-bold">
+          {t('contact.title')} <span className="gradient-text">{t('contact.title.highlight')}</span>
+          </h1>
+        </div>
         <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-          Have a design project or need a frontend developer? I'd love to hear from you!
+          {t('contact.subtitle')}
         </p>
       </motion.section>
 
@@ -33,11 +43,10 @@ const Contact: React.FC = () => {
           <div className="glass rounded-2xl p-8">
             <div className="flex items-center gap-3 mb-6">
               <MessageSquare className="w-6 h-6 text-purple-500" />
-              <h2 className="text-2xl font-bold">Let's Talk</h2>
+              <h2 className="text-2xl font-bold">{t('contact.info.title')}</h2>
             </div>
             <p className="text-slate-600 dark:text-slate-400 mb-6">
-              Whether you have a design project, need a frontend developer, or just want to connect, 
-              feel free to reach out. I'll get back to you as soon as possible!
+              {t('contact.info.description')}
             </p>
 
             <div className="space-y-4">
@@ -55,7 +64,7 @@ const Contact: React.FC = () => {
 
             <div className="mt-8">
               <h3 className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-4">
-                Find me on
+                {t('contact.social.title')}
               </h3>
               <div className="flex gap-3">
                 {[
@@ -92,15 +101,15 @@ const Contact: React.FC = () => {
               className="glass rounded-2xl p-12 text-center h-full flex flex-col items-center justify-center"
             >
               <CheckCircle className="w-16 h-16 text-green-500 mb-4" />
-              <h3 className="text-2xl font-bold mb-2">Message Sent! 🎉</h3>
+              <h3 className="text-2xl font-bold mb-2">{t('contact.form.success.title')}</h3>
               <p className="text-slate-600 dark:text-slate-400 mb-6">
-                Thanks for reaching out! I'll get back to you at ersafrexx@gmail.com as soon as possible.
+                {t('contact.form.success.message')}
               </p>
               <button
                 onClick={() => setSubmitted(false)}
                 className="px-6 py-2 glass rounded-xl hover:shadow-lg transition-all"
               >
-                Send Another
+                {t('contact.form.success.button')}
               </button>
             </motion.div>
           ) : (
@@ -112,34 +121,34 @@ const Contact: React.FC = () => {
               className="glass rounded-2xl p-8 space-y-6"
             >
               <div>
-                <label className="block text-sm font-medium mb-2">Name</label>
+                <label className="block text-sm font-medium mb-2">{t('contact.form.name')}</label>
                 <input
                   name="name"
                   required
                   className="w-full px-4 py-3 glass rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
-                  placeholder="Your name"
+                  placeholder={t('contact.form.name.placeholder')}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Email</label>
+                <label className="block text-sm font-medium mb-2">{t('contact.form.email')}</label>
                 <input
                   type="email"
                   name="email"
                   required
                   className="w-full px-4 py-3 glass rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
-                  placeholder="your@email.com"
+                  placeholder={t('contact.form.email.placeholder')}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Message</label>
+                <label className="block text-sm font-medium mb-2">{t('contact.form.message')}</label>
                 <textarea
                   name="message"
                   required
                   rows={5}
                   className="w-full px-4 py-3 glass rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all resize-none"
-                  placeholder="Tell me about your project..."
+                  placeholder={t('contact.form.message.placeholder')}
                 />
               </div>
 
@@ -148,7 +157,7 @@ const Contact: React.FC = () => {
                 className="w-full px-6 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-2xl transition-all duration-300 flex items-center justify-center gap-2 group"
               >
                 <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                Send Message
+                {t('contact.form.submit')}
               </button>
             </form>
           )}

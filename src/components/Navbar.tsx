@@ -3,15 +3,11 @@ import { Link, useLocation } from 'react-router-dom'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { Moon, Sun, Menu, X, User, Mail, FileText, Download } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-
-const links = [
-  { to: '/', label: 'Home' },
-  { to: '/about', label: 'About' },
-  { to: '/gallery', label: 'Gallery' },
-  { to: '/contact', label: 'Contact' }
-]
+import { useLanguage } from '../context/LanguageContext'
+import LanguageSwitcher from './LanguageSwitcher'
 
 const Navbar: React.FC = () => {
+  const { t } = useLanguage()
   const [dark, setDark] = useState<boolean>(() => {
     try {
       return localStorage.getItem('theme') === 'dark'
@@ -22,6 +18,12 @@ const Navbar: React.FC = () => {
   
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
+
+  const links = [
+    { to: '/', label: t('nav.home') },
+    { to: '/about', label: t('nav.about') },
+    { to: '/contact', label: t('nav.contact') }
+  ]
 
   useEffect(() => {
     const root = document.documentElement
@@ -58,10 +60,13 @@ const Navbar: React.FC = () => {
             </Link>
           ))}
 
+          {/* Language Switcher */}
+          <LanguageSwitcher />
+
           <button
             onClick={() => setDark((d) => !d)}
             aria-label="Toggle dark mode"
-            className="ml-4 p-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-700/60 transition-all duration-300"
+            className="ml-2 p-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-700/60 transition-all duration-300"
           >
             {dark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
@@ -147,6 +152,12 @@ const Navbar: React.FC = () => {
                   {l.label}
                 </Link>
               ))}
+              
+              {/* Language Switcher Mobile */}
+              <div className="pt-2">
+                <LanguageSwitcher />
+              </div>
+              
               <button
                 onClick={() => setDark((d) => !d)}
                 className="px-4 py-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-700/60 transition-all flex items-center gap-2"

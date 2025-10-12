@@ -2,21 +2,29 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import * as Accordion from '@radix-ui/react-accordion'
 import { Briefcase, GraduationCap, Award, Heart, ChevronDown } from 'lucide-react'
+import HeroPortrait from '../components/HeroPortrait'
+import ScatteredPhotos from '../components/ScatteredPhotos'
+import { useLanguage } from '../context/LanguageContext'
 
 const About: React.FC = () => {
+  const { t } = useLanguage()
+  
   const skills = [
-    { category: 'Frontend', items: ['React', 'TypeScript', 'Tailwind CSS', 'Next.js', 'JavaScript'] },
-    { category: 'Desain UI/UX', items: ['Figma', 'Adobe XD', 'Prototyping', 'Wireframing', 'Design Systems'] },
-    { category: 'Tools & Lainnya', items: ['Git', 'VS Code', 'Framer Motion', 'Responsive Design', 'Accessibility'] }
+    { category: t('about.skills.frontend'), items: ['React', 'TypeScript', 'Tailwind CSS', 'Next.js', 'JavaScript'] },
+    { category: t('about.skills.design'), items: ['Figma', 'Adobe XD', 'Prototyping', 'Wireframing', 'Design Systems'] },
+    { category: t('about.skills.tools'), items: ['Git', 'VS Code', 'Framer Motion', 'Responsive Design', 'Accessibility'] }
   ]
 
   const timeline = [
-    { year: '2023', title: 'SMK Negeri 2 Magelang', company: 'Sekolah Menengah Kejuruan', icon: <GraduationCap className="w-5 h-5" /> },
-    { year: '2020', title: 'SMP Negeri 1 Tegalrejo', company: 'Sekolah Menengah Pertama', icon: <GraduationCap className="w-5 h-5" /> }
+  { year: '2027', title: 'SMK NEGERI 2 MAGELANG', company: t('about.education.high.desc'), icon: <GraduationCap className="w-5 h-5" /> },
+  { year: '2023', title: 'SMP NEGERI 1 TEGALREJO', company: t('about.education.middle.desc'), icon: <GraduationCap className="w-5 h-5" /> }
   ]
 
   return (
     <div className="mx-auto max-w-5xl space-y-16">
+      {/* Scattered photos background */}
+      <ScatteredPhotos />
+      
       {/* Header */}
       <motion.section
         initial={{ opacity: 0, y: 20 }}
@@ -24,12 +32,17 @@ const About: React.FC = () => {
         transition={{ duration: 0.5 }}
         className="text-center"
       >
-        <h1 className="text-4xl md:text-5xl font-bold mb-6">
-          Tentang <span className="gradient-text">Saya</span>
-        </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-          Frontend developer dan UI/UX designer yang passionate dalam menciptakan interface yang indah dan user-friendly.
-        </p>
+        <div className="flex flex-col items-center gap-6 mb-4">
+          <HeroPortrait size={220} />
+          <h1 className="text-4xl md:text-5xl font-bold">
+            {t('about.title')}
+          </h1>
+        </div>
+        {t('about.subtitle') && t('about.subtitle') !== 'about.subtitle' && (
+          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+            {t('about.subtitle')}
+          </p>
+        )}
       </motion.section>
 
       {/* Bio */}
@@ -42,22 +55,17 @@ const About: React.FC = () => {
       >
         <div className="flex items-center gap-3 mb-6">
           <Heart className="w-6 h-6 text-pink-500" />
-          <h2 className="text-2xl font-bold">Cerita Saya</h2>
+          <h2 className="text-2xl font-bold">{t('about.bio.title')}</h2>
         </div>
         <div className="space-y-4 text-slate-700 dark:text-slate-300">
           <p>
-            Saya adalah seorang frontend developer dan UI/UX designer dengan passion dalam menciptakan 
-            pengalaman pengguna yang indah dan intuitif. Perjalanan saya dimulai dengan ketertarikan pada 
-            desain dan berkembang menjadi kecintaan untuk mewujudkan desain tersebut dengan kode.
+            {t('about.bio.p1')}
           </p>
           <p>
-            Saya berspesialisasi dalam membangun aplikasi web modern dengan React dan TypeScript, sambil 
-            memastikan setiap pixel selaras sempurna dengan visi desain. Saya percaya produk yang hebat 
-            berada di persimpangan antara desain yang indah dan kode yang bersih dan performan.
+            {t('about.bio.p2')}
           </p>
           <p>
-            Ketika tidak sedang coding atau mendesain, Anda akan menemukan saya mengeksplorasi tren desain 
-            terbaru, bereksperimen dengan animasi, atau berkontribusi untuk komunitas desain dan developer.
+            {t('about.bio.p3')}
           </p>
         </div>
       </motion.section>
@@ -71,7 +79,7 @@ const About: React.FC = () => {
       >
         <div className="flex items-center gap-3 mb-8">
           <Award className="w-6 h-6 text-purple-500" />
-          <h2 className="text-2xl font-bold">Keahlian & Teknologi</h2>
+          <h2 className="text-2xl font-bold">{t('about.skills.title')}</h2>
         </div>
         <div className="grid md:grid-cols-3 gap-6">
           {skills.map((skillGroup, idx) => (
@@ -107,7 +115,7 @@ const About: React.FC = () => {
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
       >
-        <h2 className="text-2xl font-bold mb-8 text-center">Pendidikan</h2>
+        <h2 className="text-2xl font-bold mb-8 text-center">{t('about.education.title')}</h2>
         <div className="space-y-6">
           {timeline.map((item, idx) => (
             <motion.div
@@ -139,61 +147,53 @@ const About: React.FC = () => {
         viewport={{ once: true }}
         className="glass rounded-3xl p-8 md:p-12"
       >
-        <h2 className="text-2xl font-bold mb-8 text-center">Pertanyaan yang Sering Diajukan</h2>
+        <h2 className="text-2xl font-bold mb-8 text-center">{t('about.faq.title')}</h2>
         <Accordion.Root type="single" collapsible className="space-y-4">
           <Accordion.Item value="item-1" className="glass rounded-xl overflow-hidden">
             <Accordion.Header>
               <Accordion.Trigger className="w-full px-6 py-4 flex items-center justify-between text-left font-medium hover:bg-white/50 dark:hover:bg-slate-700/50 transition-all group">
-                <span>Teknologi apa yang kamu kuasai?</span>
+                <span>{t('about.faq.q1')}</span>
                 <ChevronDown className="w-5 h-5 transition-transform duration-300 group-data-[state=open]:rotate-180" />
               </Accordion.Trigger>
             </Accordion.Header>
             <Accordion.Content className="px-6 pb-4 text-slate-600 dark:text-slate-400 data-[state=open]:animate-slideDown">
-              Saya berspesialisasi dalam React, TypeScript, Tailwind CSS, dan Next.js untuk pengembangan frontend. 
-              Untuk desain UI/UX, saya bekerja dengan Figma, Adobe XD, dan membuat design systems. 
-              Saya passionate dalam menciptakan user interface yang accessible, performan, dan indah.
+              {t('about.faq.a1')}
             </Accordion.Content>
           </Accordion.Item>
 
           <Accordion.Item value="item-2" className="glass rounded-xl overflow-hidden">
             <Accordion.Header>
               <Accordion.Trigger className="w-full px-6 py-4 flex items-center justify-between text-left font-medium hover:bg-white/50 dark:hover:bg-slate-700/50 transition-all group">
-                <span>Apakah kamu menerima proyek freelance?</span>
+                <span>{t('about.faq.q2')}</span>
                 <ChevronDown className="w-5 h-5 transition-transform duration-300 group-data-[state=open]:rotate-180" />
               </Accordion.Trigger>
             </Accordion.Header>
             <Accordion.Content className="px-6 pb-4 text-slate-600 dark:text-slate-400 data-[state=open]:animate-slideDown">
-              Ya! Saya selalu terbuka untuk proyek freelance yang menarik. Apakah kamu membutuhkan website 
-              lengkap, desain UI/UX, atau bantuan dengan proyek React yang sudah ada, jangan ragu untuk 
-              menghubungi saya di ersafrexx@gmail.com.
+              {t('about.faq.a2')}
             </Accordion.Content>
           </Accordion.Item>
 
           <Accordion.Item value="item-3" className="glass rounded-xl overflow-hidden">
             <Accordion.Header>
               <Accordion.Trigger className="w-full px-6 py-4 flex items-center justify-between text-left font-medium hover:bg-white/50 dark:hover:bg-slate-700/50 transition-all group">
-                <span>Berapa lama waktu yang dibutuhkan untuk sebuah proyek?</span>
+                <span>{t('about.faq.q3')}</span>
                 <ChevronDown className="w-5 h-5 transition-transform duration-300 group-data-[state=open]:rotate-180" />
               </Accordion.Trigger>
             </Accordion.Header>
             <Accordion.Content className="px-6 pb-4 text-slate-600 dark:text-slate-400 data-[state=open]:animate-slideDown">
-              Timeline proyek bervariasi berdasarkan lingkup dan kompleksitas. Landing page sederhana mungkin 
-              memakan waktu 1-2 minggu, sedangkan aplikasi web lengkap bisa memakan waktu 4-8 minggu. Saya 
-              selalu memberikan estimasi detail setelah memahami kebutuhan Anda.
+              {t('about.faq.a3')}
             </Accordion.Content>
           </Accordion.Item>
 
           <Accordion.Item value="item-4" className="glass rounded-xl overflow-hidden">
             <Accordion.Header>
               <Accordion.Trigger className="w-full px-6 py-4 flex items-center justify-between text-left font-medium hover:bg-white/50 dark:hover:bg-slate-700/50 transition-all group">
-                <span>Bagaimana proses desain kamu?</span>
+                <span>{t('about.faq.q4')}</span>
                 <ChevronDown className="w-5 h-5 transition-transform duration-300 group-data-[state=open]:rotate-180" />
               </Accordion.Trigger>
             </Accordion.Header>
             <Accordion.Content className="px-6 pb-4 text-slate-600 dark:text-slate-400 data-[state=open]:animate-slideDown">
-              Saya mengikuti proses desain yang berpusat pada pengguna: Riset → Wireframing → Prototyping → 
-              Desain Visual → Development → Testing. Saya percaya pada desain iteratif dengan feedback loop 
-              yang teratur untuk memastikan produk akhir memenuhi visi Anda dan kebutuhan pengguna.
+              {t('about.faq.a4')}
             </Accordion.Content>
           </Accordion.Item>
         </Accordion.Root>

@@ -2,10 +2,21 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight, Code, Palette, Zap, Github, Linkedin, Mail, Sparkles } from 'lucide-react'
+import HeroPortrait from '../components/HeroPortrait'
+import ScatteredPhotos from '../components/ScatteredPhotos'
+import { useLanguage } from '../context/LanguageContext'
 
 const Home: React.FC = () => {
+  const { t, language } = useLanguage()
   const [typedText, setTypedText] = useState('')
-  const roles = ['Frontend Developer', 'UI/UX Designer', 'Creative Designer', 'React Specialist']
+  
+  const roles = [
+    t('home.role1'),
+    t('home.role2'),
+    t('home.role3'),
+    t('home.role4')
+  ]
+  
   const [roleIndex, setRoleIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
 
@@ -29,10 +40,13 @@ const Home: React.FC = () => {
     }, isDeleting ? 50 : 100)
 
     return () => clearTimeout(timeout)
-  }, [typedText, isDeleting, roleIndex])
+  }, [typedText, isDeleting, roleIndex, roles])
 
   return (
     <div className="space-y-20">
+      {/* Scattered photos background */}
+      <ScatteredPhotos />
+      
       {/* Hero Section */}
       <section className="mx-auto max-w-4xl text-center py-20 relative">
         {/* Floating particles with improved animations */}
@@ -90,7 +104,9 @@ const Home: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <motion.h1 
+          <div className="flex flex-col items-center gap-6">
+            <HeroPortrait />
+            <motion.h1 
             className="text-5xl md:text-7xl font-bold mb-6"
             initial={{ opacity: 0, scale: 0.8, y: 50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -111,7 +127,7 @@ const Home: React.FC = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
-              Hi, I'm{' '}
+              {t('home.greeting')}{' '}
             </motion.span>
             <motion.span 
               className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-500 bg-clip-text text-transparent"
@@ -128,9 +144,10 @@ const Home: React.FC = () => {
                 transition: { duration: 0.5 }
               }}
             >
-              Ersaf Sirazi Arifin
+              {t('home.name')}
             </motion.span>
-          </motion.h1>
+            </motion.h1>
+          </div>
           
           <motion.div 
             className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-8 h-8 flex items-center justify-center gap-2"
@@ -149,8 +166,7 @@ const Home: React.FC = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            Crafting beautiful and intuitive user interfaces with React and modern design tools. 
-            Passionate about creating seamless user experiences and pixel-perfect designs.
+            {t('home.description')}
           </motion.p>
 
           <motion.div 
@@ -180,7 +196,7 @@ const Home: React.FC = () => {
                   className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   initial={false}
                 />
-                <motion.span className="relative z-10">Lihat Galeri</motion.span>
+                <motion.span className="relative z-10">{t('home.cta.gallery')}</motion.span>
                 <motion.div
                   animate={{ x: [0, 3, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
@@ -202,7 +218,7 @@ const Home: React.FC = () => {
                 to="/contact" 
                 className="px-8 py-4 glass rounded-xl font-semibold hover:shadow-xl transition-all duration-300 backdrop-blur-sm border border-white/20"
               >
-                Get In Touch
+                {t('home.cta.contact')}
               </Link>
             </motion.div>
           </motion.div>
@@ -228,7 +244,7 @@ const Home: React.FC = () => {
             transition={{ delay: 0.2, duration: 0.6 }}
             viewport={{ once: true }}
           >
-            What I Do
+            {t('home.whatido.title')}
           </motion.h2>
           <motion.div 
             className="grid md:grid-cols-3 gap-6"
@@ -247,20 +263,20 @@ const Home: React.FC = () => {
             {[
               {
                 icon: <Code className="w-8 h-8" />,
-                title: 'Frontend Development',
-                desc: 'Building responsive, performant web applications with React, TypeScript, and modern tools.',
+                title: t('home.feature1.title'),
+                desc: t('home.feature1.desc'),
                 gradient: 'from-blue-500 to-cyan-500'
               },
               {
                 icon: <Palette className="w-8 h-8" />,
-                title: 'UI/UX Design',
-                desc: 'Designing beautiful, intuitive interfaces that users love using Figma and design systems.',
+                title: t('home.feature2.title'),
+                desc: t('home.feature2.desc'),
                 gradient: 'from-purple-500 to-pink-500'
               },
               {
                 icon: <Zap className="w-8 h-8" />,
-                title: 'User Experience',
-                desc: 'Creating seamless, accessible experiences optimized for all devices and users.',
+                title: t('home.feature3.title'),
+                desc: t('home.feature3.desc'),
                 gradient: 'from-orange-500 to-red-500'
               }
             ].map((item, idx) => (
@@ -319,10 +335,9 @@ const Home: React.FC = () => {
           viewport={{ once: true }}
           className="glass rounded-3xl p-12 text-center"
         >
-          <h2 className="text-3xl font-bold mb-4">Let's Create Something Beautiful</h2>
+          <h2 className="text-3xl font-bold mb-4">{t('home.cta.title')}</h2>
           <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
-            I'm always interested in hearing about new design and development projects. 
-            Let's connect and bring your ideas to life!
+            {t('home.cta.description')}
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <a 
