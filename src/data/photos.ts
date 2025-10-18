@@ -1,4 +1,4 @@
-// Centralized list of photo URLs. Put your images into /public/photos and use these names
+            // Centralized list of photo URLs. Put your images into /public/photos and use these names
 // Use Vite BASE_URL to support sub-path deployments
 const BASE = (import.meta as any).env?.BASE_URL || '/'
 const photoPath = (name: string) => `${BASE}photos/${name}`

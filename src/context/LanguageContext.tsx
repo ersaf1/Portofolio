@@ -24,20 +24,28 @@ const translations: Translations = {
   'nav.home': { en: 'Home', id: 'Beranda' },
   'nav.about': { en: 'About', id: 'Tentang' },
   'nav.contact': { en: 'Contact', id: 'Kontak' },
+  'nav.gallery': { en: 'Gallery', id: 'Galeri' },
   
   // Home Page
   'home.greeting': { en: "Hi, I'm", id: 'Halo, Saya' },
   'home.name': { en: 'Ersaf Sirazi Arifin', id: 'Ersaf Sirazi Arifin' },
+  'home.school': { en: 'SMK Negeri 2 Magelang Student', id: 'Siswa SMK Negeri 2 Magelang' },
+  'home.major': { en: 'Software and Game Development', id: 'Pengembangan Perangkat Lunak dan Gim (PPLG)' },
   'home.role1': { en: 'Frontend Developer', id: 'Frontend Developer' },
   'home.role2': { en: 'UI/UX Designer', id: 'Desainer UI/UX' },
   'home.role3': { en: 'Creative Designer', id: 'Desainer Kreatif' },
   'home.role4': { en: 'React Specialist', id: 'Spesialis React' },
+  'home.intro': { 
+    en: 'I am a vocational high school student majoring in Software and Game Development who is passionate about programming and web design. I love creating beautiful and functional user interfaces.',
+    id: 'Saya adalah pelajar SMK jurusan PPLG yang tertarik pada pemrograman dan desain web. Saya senang membuat antarmuka pengguna yang indah dan fungsional.'
+  },
   'home.description': { 
     en: 'Crafting beautiful and intuitive user interfaces with React and modern design tools. Passionate about creating seamless user experiences and pixel-perfect designs.',
     id: 'Membuat antarmuka pengguna yang indah dan intuitif dengan React dan tools desain modern. Passionate dalam menciptakan pengalaman pengguna yang mulus dan desain yang pixel-perfect.'
   },
+  'home.cta.projects': { en: 'View My Projects', id: 'Lihat Proyek Saya' },
   'home.cta.gallery': { en: 'View Gallery', id: 'Lihat Galeri' },
-  'home.cta.contact': { en: 'Get in Touch', id: 'Hubungi Saya' },
+  'home.cta.contact': { en: 'Contact Me', id: 'Hubungi Saya' },
   'home.whatido.title': { en: 'What I Do', id: 'Apa yang Saya Lakukan' },
   'home.feature1.title': { en: 'Frontend Development', id: 'Pengembangan Frontend' },
   'home.feature1.desc': { 
@@ -62,11 +70,29 @@ const translations: Translations = {
   
   // About Page
   'about.title': { en: 'About', id: 'Tentang' },
-  'about.me': { en: 'Me', id: 'Saya' },
-  'about.intro': {
-    en: 'Frontend developer and UI/UX designer who is passionate about creating beautiful and user-friendly interfaces.',
-    id: 'Frontend developer dan UI/UX designer yang passionate dalam menciptakan interface yang indah dan user-friendly.'
+  'about.subtitle': {
+    en: 'SMK student passionate about programming and web design',
+    id: 'Pelajar SMK yang passionate dalam pemrograman dan desain web'
   },
+  'about.personal.title': { en: 'Personal Information', id: 'Informasi Pribadi' },
+  'about.personal.age': { en: 'Age', id: 'Umur' },
+  'about.personal.school': { en: 'School', id: 'Sekolah' },
+  'about.personal.major': { en: 'Major', id: 'Jurusan' },
+  'about.hobbies.title': { en: 'Hobbies & Interests', id: 'Hobi & Minat' },
+  'about.hobbies.desc': { 
+    en: 'I enjoy coding, designing user interfaces, exploring new technologies, and participating in programming competitions. I also love learning from online courses and building creative projects.',
+    id: 'Saya senang coding, mendesain antarmuka pengguna, mengeksplorasi teknologi baru, dan mengikuti kompetisi pemrograman. Saya juga suka belajar dari kursus online dan membangun proyek kreatif.'
+  },
+  'about.goals.title': { en: 'Goals & Dreams', id: 'Tujuan & Cita-cita' },
+  'about.goals.desc': { 
+    en: 'My dream is to become a professional web developer and create impactful digital products. I want to continue learning and mastering the latest technologies to build innovative solutions.',
+    id: 'Cita-cita saya adalah menjadi web developer profesional dan menciptakan produk digital yang bermanfaat. Saya ingin terus belajar dan menguasai teknologi terbaru untuk membangun solusi inovatif.'
+  },
+  'about.values.title': { en: 'Personal Values', id: 'Nilai-nilai Pribadi' },
+  'about.values.diligent': { en: 'Diligent', id: 'Rajin' },
+  'about.values.creative': { en: 'Creative', id: 'Kreatif' },
+  'about.values.challenge': { en: 'Love Challenges', id: 'Suka Tantangan' },
+  'about.values.teamwork': { en: 'Team Player', id: 'Kerja Tim' },
   'about.bio.title': { en: 'My Story', id: 'Cerita Saya' },
   'about.bio.p1': {
     en: 'I am a frontend developer and UI/UX designer with a passion for creating beautiful and intuitive user experiences. My journey started with an interest in design and evolved into a love for bringing those designs to life with code.',
@@ -81,9 +107,15 @@ const translations: Translations = {
     id: 'Ketika tidak sedang coding atau mendesain, Anda akan menemukan saya mengeksplorasi tren desain terbaru, bereksperimen dengan animasi, atau berkontribusi untuk komunitas desain dan developer.'
   },
   'about.skills.title': { en: 'Skills & Technologies', id: 'Keahlian & Teknologi' },
-  'about.skills.frontend': { en: 'Frontend', id: 'Frontend' },
-  'about.skills.design': { en: 'UI/UX Design', id: 'Desain UI/UX' },
-  'about.skills.tools': { en: 'Tools & Others', id: 'Tools & Lainnya' },
+  'about.skills.programming': { en: '💻 Programming', id: '💻 Pemrograman' },
+  'about.skills.design': { en: '🎨 Design', id: '🎨 Desain' },
+  'about.skills.tools': { en: '🧩 Tools', id: '🧩 Tools' },
+  'about.skills.softskills': { en: '🗣️ Soft Skills', id: '🗣️ Soft Skill' },
+  'about.experience.title': { en: 'Experience & Activities', id: 'Pengalaman & Kegiatan' },
+  'about.experience.extracurricular': { en: 'Extracurricular', id: 'Ekstrakurikuler' },
+  'about.experience.competitions': { en: 'Competitions', id: 'Lomba' },
+  'about.experience.workshops': { en: 'Workshops & Training', id: 'Workshop & Pelatihan' },
+  'about.experience.organizations': { en: 'Organizations', id: 'Organisasi' },
   'about.education.title': { en: 'Education', id: 'Pendidikan' },
   'about.faq.title': { en: 'Frequently Asked Questions', id: 'Pertanyaan yang Sering Diajukan' },
   'about.faq.q1': { en: 'What technologies do you master?', id: 'Teknologi apa yang kamu kuasai?' },
@@ -120,6 +152,10 @@ const translations: Translations = {
     id: 'Baik Anda punya proyek desain, butuh frontend developer, atau hanya ingin terhubung, jangan ragu menghubungi saya. Saya akan segera membalas Anda!'
   },
   'contact.social.title': { en: 'Find me on', id: 'Temukan saya di' },
+  'contact.social.github': { en: 'GitHub', id: 'GitHub' },
+  'contact.social.linkedin': { en: 'LinkedIn', id: 'LinkedIn' },
+  'contact.social.instagram': { en: 'Instagram', id: 'Instagram' },
+  'contact.download.cv': { en: 'Download CV', id: 'Unduh CV' },
   'contact.form.name': { en: 'Name', id: 'Nama' },
   'contact.form.name.placeholder': { en: 'Your name', id: 'Nama Anda' },
   'contact.form.email': { en: 'Email', id: 'Email' },

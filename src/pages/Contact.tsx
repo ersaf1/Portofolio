@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, MessageSquare, Send, CheckCircle, Github, Linkedin, Twitter } from 'lucide-react'
+import { Mail, MessageSquare, Send, CheckCircle, Github, Linkedin, Instagram } from 'lucide-react'
 import HeroPortrait from '../components/HeroPortrait'
 import ScatteredPhotos from '../components/ScatteredPhotos'
 import { useLanguage } from '../context/LanguageContext'
@@ -66,21 +66,26 @@ const Contact: React.FC = () => {
               <h3 className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-4">
                 {t('contact.social.title')}
               </h3>
-              <div className="flex gap-3">
+              <div className="grid grid-cols-1 gap-3">
                 {[
-                  { icon: <Github className="w-5 h-5" />, href: 'https://github.com', label: 'GitHub' },
-                  { icon: <Linkedin className="w-5 h-5" />, href: 'https://linkedin.com', label: 'LinkedIn' },
-                  { icon: <Twitter className="w-5 h-5" />, href: 'https://twitter.com', label: 'Twitter' }
+                  { icon: <Github className="w-5 h-5" />, href: 'https://github.com/ersaf1', label: t('contact.social.github'), username: '@ersaf1' },
+                  { icon: <Linkedin className="w-5 h-5" />, href: 'https://linkedin.com', label: t('contact.social.linkedin'), username: 'Ersaf Sirazi Arifin' },
+                  { icon: <Instagram className="w-5 h-5" />, href: 'https://instagram.com/3rsapp', label: t('contact.social.instagram'), username: '@3rsapp' }
                 ].map((social, idx) => (
                   <a
                     key={idx}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={social.label}
-                    className="p-3 glass rounded-xl hover:scale-110 hover:shadow-lg transition-all"
+                    className="flex items-center gap-3 p-4 glass rounded-xl hover:shadow-lg transition-all group"
                   >
-                    {social.icon}
+                    <div className="text-purple-500 group-hover:scale-110 transition-transform">
+                      {social.icon}
+                    </div>
+                    <div>
+                      <div className="text-sm text-slate-500 dark:text-slate-400">{social.label}</div>
+                      <div className="font-medium">{social.username}</div>
+                    </div>
                   </a>
                 ))}
               </div>

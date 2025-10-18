@@ -10,16 +10,24 @@ const About: React.FC = () => {
   const { t } = useLanguage()
   
   const skills = [
-    { category: t('about.skills.frontend'), items: ['React', 'TypeScript', 'Tailwind CSS', 'Next.js', 'JavaScript'] },
-    { category: t('about.skills.design'), items: ['Figma', 'Adobe XD', 'Prototyping', 'Wireframing', 'Design Systems'] },
-    { category: t('about.skills.tools'), items: ['Git', 'VS Code', 'Framer Motion', 'Responsive Design', 'Accessibility'] }
+    { category: t('about.skills.programming'), items: ['JavaScript', 'TypeScript', 'Python', 'React', 'Node.js'] },
+    { category: t('about.skills.design'), items: ['Figma', 'Canva', 'Adobe XD', 'UI/UX Design'] },
+    { category: t('about.skills.tools'), items: ['Git', 'GitHub', 'VS Code', 'Postman'] },
+    { category: t('about.skills.softskills'), items: ['Teamwork', 'Communication', 'Creativity', 'Problem Solving'] }
   ]
 
   const timeline = [
-  { year: '2027', title: 'SMK NEGERI 2 MAGELANG', company: t('about.education.high.desc'), icon: <GraduationCap className="w-5 h-5" /> },
-  { year: '2023', title: 'SMP NEGERI 1 TEGALREJO', company: t('about.education.middle.desc'), icon: <GraduationCap className="w-5 h-5" /> }
+    { year: '2027', title: 'SMK NEGERI 2 MAGELANG', company: t('about.education.high.desc'), icon: <GraduationCap className="w-5 h-5" /> },
+    { year: '2023', title: 'SMP NEGERI 1 TEGALREJO', company: t('about.education.middle.desc'), icon: <GraduationCap className="w-5 h-5" /> }
   ]
-
+  
+  const personalValues = [
+    { icon: '💪', label: t('about.values.diligent') },
+    { icon: '🎨', label: t('about.values.creative') },
+    { icon: '🔥', label: t('about.values.challenge') },
+    { icon: '🤝', label: t('about.values.teamwork') }
+  ]
+  
   return (
     <div className="mx-auto max-w-5xl space-y-16">
       {/* Scattered photos background */}
@@ -35,14 +43,12 @@ const About: React.FC = () => {
         <div className="flex flex-col items-center gap-6 mb-4">
           <HeroPortrait size={220} />
           <h1 className="text-4xl md:text-5xl font-bold">
-            {t('about.title')}
+            {t('about.title')} <span className="gradient-text">Me</span>
           </h1>
         </div>
-        {t('about.subtitle') && t('about.subtitle') !== 'about.subtitle' && (
-          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-            {t('about.subtitle')}
-          </p>
-        )}
+        <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+          {t('about.subtitle')}
+        </p>
       </motion.section>
 
       {/* Bio */}
@@ -67,6 +73,66 @@ const About: React.FC = () => {
           <p>
             {t('about.bio.p3')}
           </p>
+        </div>
+      </motion.section>
+
+      {/* Hobbies & Goals */}
+      <div className="grid md:grid-cols-2 gap-6">
+        <motion.section
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="glass rounded-3xl p-8"
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-3xl">🎯</span>
+            <h2 className="text-xl font-bold">{t('about.hobbies.title')}</h2>
+          </div>
+          <p className="text-slate-700 dark:text-slate-300">
+            {t('about.hobbies.desc')}
+          </p>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="glass rounded-3xl p-8"
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-3xl">🚀</span>
+            <h2 className="text-xl font-bold">{t('about.goals.title')}</h2>
+          </div>
+          <p className="text-slate-700 dark:text-slate-300">
+            {t('about.goals.desc')}
+          </p>
+        </motion.section>
+      </div>
+
+      {/* Personal Values */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
+      >
+        <h2 className="text-2xl font-bold mb-6 text-center">{t('about.values.title')}</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {personalValues.map((value, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              viewport={{ once: true }}
+              className="glass rounded-2xl p-6 text-center hover:shadow-xl transition-all duration-300"
+            >
+              <div className="text-4xl mb-3">{value.icon}</div>
+              <h3 className="font-semibold text-slate-800 dark:text-slate-200">{value.label}</h3>
+            </motion.div>
+          ))}
         </div>
       </motion.section>
 

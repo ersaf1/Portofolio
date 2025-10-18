@@ -104,10 +104,10 @@ const Home: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="flex flex-col items-center gap-6">
+          <div className="flex flex-col items-center gap-4">
             <HeroPortrait />
             <motion.h1 
-            className="text-5xl md:text-7xl font-bold mb-6"
+            className="text-5xl md:text-7xl font-bold mb-2"
             initial={{ opacity: 0, scale: 0.8, y: 50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ 
@@ -147,6 +147,20 @@ const Home: React.FC = () => {
               {t('home.name')}
             </motion.span>
             </motion.h1>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+              className="text-center space-y-2"
+            >
+              <p className="text-lg md:text-xl text-purple-600 dark:text-purple-400 font-semibold">
+                {t('home.school')}
+              </p>
+              <p className="text-base md:text-lg text-slate-600 dark:text-slate-400">
+                {t('home.major')}
+              </p>
+            </motion.div>
           </div>
           
           <motion.div 
@@ -161,16 +175,25 @@ const Home: React.FC = () => {
           </motion.div>
 
           <motion.p 
-            className="text-lg text-slate-500 dark:text-slate-400 mb-12 max-w-xl mx-auto"
+            className="text-lg text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+          >
+            {t('home.intro')}
+          </motion.p>
+          
+          <motion.p 
+            className="text-base text-slate-500 dark:text-slate-400 mb-12 max-w-xl mx-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
           >
             {t('home.description')}
           </motion.p>
 
           <motion.div 
-            className="flex flex-wrap gap-4 justify-center"
+            className="flex flex-row gap-6 justify-center items-center mt-8"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ 
@@ -189,14 +212,14 @@ const Home: React.FC = () => {
               transition={{ duration: 0.2 }}
             >
               <Link 
-                to="/gallery" 
-                className="group px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-2xl transition-all duration-300 flex items-center gap-2 relative overflow-hidden"
+                to="/projects"
+                className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-3xl font-semibold shadow-xl transition-all duration-300 flex items-center gap-2 relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-pink-400"
               >
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   initial={false}
                 />
-                <motion.span className="relative z-10">{t('home.cta.gallery')}</motion.span>
+                <motion.span className="relative z-10">{t('home.cta.projects')}</motion.span>
                 <motion.div
                   animate={{ x: [0, 3, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
@@ -215,8 +238,8 @@ const Home: React.FC = () => {
               transition={{ duration: 0.2 }}
             >
               <Link 
-                to="/contact" 
-                className="px-8 py-4 glass rounded-xl font-semibold hover:shadow-xl transition-all duration-300 backdrop-blur-sm border border-white/20"
+                to="/contact"
+                className="px-8 py-4 glass rounded-xl font-semibold hover:shadow-xl transition-all duration-300 backdrop-blur-sm border border-white/20 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-400"
               >
                 {t('home.cta.contact')}
               </Link>
