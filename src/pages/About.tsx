@@ -17,8 +17,8 @@ const About: React.FC = () => {
   ]
 
   const timeline = [
-    { year: '2027', title: 'SMK NEGERI 2 MAGELANG', company: '', icon: <GraduationCap className="w-5 h-5" /> },
-  { year: '2023', title: 'SMP NEGERI 1 TEGALREJO', company: '', icon: <GraduationCap className="w-5 h-5" /> }
+    { year: '2027', title: 'SMK NEGERI 2 MAGELANG', icon: <GraduationCap className="w-5 h-5" /> },
+    { year: '2023', title: 'SMP NEGERI 1 TEGALREJO', icon: <GraduationCap className="w-5 h-5" /> }
   ]
   
   const personalValues = [
@@ -198,7 +198,7 @@ const About: React.FC = () => {
               <div>
                 <div className="text-sm text-slate-500 dark:text-slate-400 mb-1">{item.year}</div>
                 <h3 className="text-lg font-bold mb-1">{item.title}</h3>
-                <p className="text-slate-600 dark:text-slate-400">{item.company}</p>
+                {/* company removed for balance */}
               </div>
             </motion.div>
           ))}
