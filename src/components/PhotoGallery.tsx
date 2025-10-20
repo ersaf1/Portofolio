@@ -1,31 +1,32 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
-// Pastikan file-file berikut ada di folder public/photos dengan nama yang sama persis
-const rawNames = [
-  'WhatsApp Image 2025-10-10 at 10.12.54.jpeg',
-  'WhatsApp Image 2025-10-10 at 10.12.56.jpeg',
-  'WhatsApp Image 2025-10-10 at 10.13.04 (1).jpeg',
-  'WhatsApp Image 2025-10-10 at 10.13.04.jpeg',
-  'WhatsApp Image 2025-10-10 at 10.13.05.jpeg',
-  'WhatsApp Image 2025-10-10 at 10.13.26.jpeg',
-  'WhatsApp Image 2025-10-10 at 10.13.27.jpeg',
-  'WhatsApp Image 2025-10-10 at 10.13.28 (1).jpeg',
-];
+// Ambil SEMUA gambar dari folder src/assets (subfolder juga) secara otomatis
+// Vite akan mengubahnya menjadi URL yang bisa dipakai di <img>
+const useAssetImages = () => {
+  const modules = import.meta.glob('../assets/**/*.{png,jpg,jpeg,webp,gif,svg}', {
+    eager: true,
+    as: 'url',
+  }) as Record<string, string>
 
-const photoList = rawNames.map((name) => encodeURI(`/photos/${name}`));
-
-// Helper untuk menukar ekstensi .jpeg <-> .jpg
-const swapJpegJpg = (url: string) => {
-  if (/\.jpeg$/i.test(url)) return url.replace(/\.jpeg$/i, '.jpg')
-  if (/\.jpg$/i.test(url)) return url.replace(/\.jpg$/i, '.jpeg')
-  return url
+  // Urutkan berdasarkan path agar konsisten
+  const urls = Object.entries(modules)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([, url]) => url)
+  return urls
 }
 
 export default function PhotoGallery() {
+  const assets = useAssetImages()
+  const initial = useMemo(() => (assets.length ? assets : []), [assets])
   const [broken, setBroken] = useState<Record<string, boolean>>({})
-  const [srcs, setSrcs] = useState<string[]>(photoList)
+  const [srcs, setSrcs] = useState<string[]>(initial)
   const [fallbackTried, setFallbackTried] = useState<Record<number, boolean>>({})
-  const placeholder = 'https://placehold.co/800x600/0f172a/94a3b8?text=Foto+Tidak+Ditemukan'
+  const placeholderFor = (i: number) => `https://picsum.photos/seed/galeri-${i}/800/600`
+
+  // Jika daftar assets berubah (mis. setelah build HMR), sinkronkan srcs
+  React.useEffect(() => {
+    setSrcs(assets.length ? assets : [])
+  }, [assets])
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -38,21 +39,15 @@ export default function PhotoGallery() {
               className="object-cover w-full h-full"
               loading="lazy"
               onError={() => {
-                // Coba fallback ke ekstensi lain sekali
+                // Pakai foto random agar tetap tampil
                 if (!fallbackTried[i]) {
                   setFallbackTried((ft) => ({ ...ft, [i]: true }))
                   setSrcs((curr) => {
                     const next = [...curr]
-                    next[i] = swapJpegJpg(curr[i])
+                    next[i] = placeholderFor(i)
                     return next
                   })
                 } else {
-                  // Pakai placeholder agar tetap tampil
-                  setSrcs((curr) => {
-                    const next = [...curr]
-                    next[i] = placeholder
-                    return next
-                  })
                   setBroken((b) => ({ ...b, [src]: true }))
                 }
               }}
