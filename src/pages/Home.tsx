@@ -204,10 +204,7 @@ const Home: React.FC = () => {
             }}
           >
             <motion.div
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: "0 20px 40px rgba(168, 85, 247, 0.4)"
-              }}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
@@ -215,17 +212,10 @@ const Home: React.FC = () => {
                 to="/projects"
                 className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-3xl font-semibold shadow-xl transition-all duration-300 flex items-center gap-2 relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-pink-400"
               >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  initial={false}
-                />
+                {/* aura gradient removed for hover */}
                 <motion.span className="relative z-10">{t('home.cta.projects')}</motion.span>
-                <motion.div
-                  animate={{ x: [0, 3, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                  className="relative z-10"
-                >
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <motion.div className="relative z-10">
+                  <ArrowRight className="w-5 h-5" />
                 </motion.div>
               </Link>
             </motion.div>

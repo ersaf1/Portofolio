@@ -8,6 +8,8 @@ import { useLanguage } from '../context/LanguageContext'
 const Contact: React.FC = () => {
   const { t } = useLanguage()
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   return (
     <div className="mx-auto max-w-5xl space-y-12">
@@ -119,9 +121,32 @@ const Contact: React.FC = () => {
             </motion.div>
           ) : (
             <form
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault()
-                setSubmitted(true)
+                setError(null)
+                setLoading(true)
+                try {
+                  const form = e.currentTarget as HTMLFormElement
+                  const fd = new FormData(form)
+                  const payload = {
+                    name: String(fd.get('name') || ''),
+                    email: String(fd.get('email') || ''),
+                    message: String(fd.get('message') || ''),
+                  }
+                  const res = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                  })
+                  if (!res.ok) throw new Error('Failed to send')
+                  setSubmitted(true)
+                  form.reset()
+                } catch (err) {
+                  console.error(err)
+                  setError('Gagal mengirim pesan. Coba lagi nanti atau kirim email ke ersafrexx@gmail.com')
+                } finally {
+                  setLoading(false)
+                }
               }}
               className="glass rounded-2xl p-8 space-y-6"
             >
@@ -159,11 +184,15 @@ const Contact: React.FC = () => {
 
               <button
                 type="submit"
-                className="w-full px-6 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-2xl transition-all duration-300 flex items-center justify-center gap-2 group"
+                disabled={loading}
+                className="w-full px-6 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group disabled:opacity-70"
               >
-                <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                {t('contact.form.submit')}
+                <Send className="w-5 h-5" />
+                {loading ? 'Mengirim…' : t('contact.form.submit')}
               </button>
+              {error && (
+                <p className="text-red-500 text-sm mt-2">{error}</p>
+              )}
             </form>
           )}
         </motion.div>
