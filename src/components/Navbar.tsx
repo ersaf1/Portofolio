@@ -53,7 +53,7 @@ const Navbar: React.FC = () => {
               to={l.to}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                 location.pathname === l.to 
-                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg' 
+                  ? 'bg-slate-700 dark:bg-slate-600 text-white shadow-lg' 
                   : 'hover:bg-white/60 dark:hover:bg-slate-700/60'
               }`}
             >
@@ -146,7 +146,7 @@ const Navbar: React.FC = () => {
                   onClick={() => setMobileOpen(false)}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                     location.pathname === l.to 
-                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' 
+                      ? 'bg-slate-700 dark:bg-slate-600 text-white' 
                       : 'hover:bg-white/60 dark:hover:bg-slate-700/60'
                   }`}
                 >
