@@ -130,7 +130,7 @@ const Home: React.FC = () => {
               {t('home.greeting')}{' '}
             </motion.span>
             <motion.span 
-              className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-500 bg-clip-text text-transparent"
+              className="bg-gradient-to-r from-teal-600 via-cyan-600 to-emerald-500 bg-clip-text text-transparent"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ 
@@ -154,7 +154,7 @@ const Home: React.FC = () => {
               transition={{ delay: 0.4, duration: 0.5 }}
               className="text-center space-y-2"
             >
-              <p className="text-lg md:text-xl text-purple-600 dark:text-purple-400 font-semibold">
+              <p className="text-lg md:text-xl text-teal-600 dark:text-teal-400 font-semibold">
                 {t('home.school')}
               </p>
               <p className="text-base md:text-lg text-slate-600 dark:text-slate-400">
@@ -169,7 +169,7 @@ const Home: React.FC = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <Sparkles className="w-6 h-6 text-purple-500" />
+            <Sparkles className="w-6 h-6 text-teal-500" />
             <span>{typedText}</span>
             <span className="animate-pulse">|</span>
           </motion.div>
@@ -210,7 +210,7 @@ const Home: React.FC = () => {
             >
               <Link 
                 to="/projects"
-                className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-3xl font-semibold shadow-xl transition-all duration-300 flex items-center gap-2 relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-pink-400"
+                className="px-8 py-4 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-3xl font-semibold shadow-xl transition-all duration-300 flex items-center gap-2 relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-cyan-400"
               >
                 {/* aura gradient removed for hover */}
                 <motion.span className="relative z-10">{t('home.cta.projects')}</motion.span>
@@ -229,7 +229,7 @@ const Home: React.FC = () => {
             >
               <Link 
                 to="/contact"
-                className="px-8 py-4 glass rounded-xl font-semibold hover:shadow-xl transition-all duration-300 backdrop-blur-sm border border-white/20 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-400"
+                className="px-8 py-4 glass rounded-xl font-semibold hover:shadow-xl transition-all duration-300 backdrop-blur-sm border border-white/20 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-400"
               >
                 {t('home.cta.contact')}
               </Link>
@@ -278,19 +278,19 @@ const Home: React.FC = () => {
                 icon: <Code className="w-8 h-8" />,
                 title: t('home.feature1.title'),
                 desc: t('home.feature1.desc'),
-                gradient: 'from-blue-500 to-cyan-500'
+                gradient: 'from-emerald-500 to-teal-500'
               },
               {
                 icon: <Palette className="w-8 h-8" />,
                 title: t('home.feature2.title'),
                 desc: t('home.feature2.desc'),
-                gradient: 'from-purple-500 to-pink-500'
+                gradient: 'from-teal-500 to-cyan-500'
               },
               {
                 icon: <Zap className="w-8 h-8" />,
                 title: t('home.feature3.title'),
                 desc: t('home.feature3.desc'),
-                gradient: 'from-orange-500 to-red-500'
+                gradient: 'from-cyan-500 to-sky-500'
               }
             ].map((item, idx) => (
               <motion.div

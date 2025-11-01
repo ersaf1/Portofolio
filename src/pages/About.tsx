@@ -60,7 +60,7 @@ const About: React.FC = () => {
         className="glass rounded-3xl p-8 md:p-12"
       >
         <div className="flex items-center gap-3 mb-6">
-          <Heart className="w-6 h-6 text-pink-500" />
+          <Heart className="w-6 h-6 text-cyan-500" />
           <h2 className="text-2xl font-bold">{t('about.bio.title')}</h2>
         </div>
         <div className="space-y-4 text-slate-700 dark:text-slate-300">
@@ -144,7 +144,7 @@ const About: React.FC = () => {
         viewport={{ once: true }}
       >
         <div className="flex items-center gap-3 mb-8">
-          <Award className="w-6 h-6 text-purple-500" />
+          <Award className="w-6 h-6 text-teal-500" />
           <h2 className="text-2xl font-bold">{t('about.skills.title')}</h2>
         </div>
         <div className="grid md:grid-cols-3 gap-6">
@@ -163,7 +163,7 @@ const About: React.FC = () => {
                   <motion.span
                     key={i}
                     whileHover={{ scale: 1.05 }}
-                    className="px-3 py-1 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg text-sm cursor-default"
+                    className="px-3 py-1 bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 rounded-lg text-sm cursor-default"
                   >
                     {skill}
                   </motion.span>
@@ -192,7 +192,7 @@ const About: React.FC = () => {
               viewport={{ once: true }}
               className="glass rounded-2xl p-6 hover:shadow-xl transition-all duration-300 flex items-start gap-4"
             >
-              <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl">
+              <div className="p-3 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-xl">
                 {item.icon}
               </div>
               <div>

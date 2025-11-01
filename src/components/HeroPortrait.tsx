@@ -12,9 +12,9 @@ const HeroPortrait: React.FC<{ size?: number; className?: string }> = ({ size = 
       style={{ width: size, height: size }}
     >
       {/* Glow */}
-      <div className="absolute -inset-6 rounded-[40%] bg-gradient-to-tr from-purple-500/30 via-pink-500/20 to-blue-500/30 blur-2xl" />
+      <div className="absolute -inset-6 rounded-[40%] bg-gradient-to-tr from-teal-500/30 via-cyan-500/20 to-emerald-500/30 blur-2xl" />
       {/* Placeholder blob */}
-      <div className="relative z-10 w-full h-full rounded-[40%] bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 flex items-center justify-center text-white text-6xl font-bold">
+      <div className="relative z-10 w-full h-full rounded-[40%] bg-gradient-to-br from-teal-500 via-cyan-500 to-emerald-500 flex items-center justify-center text-white text-6xl font-bold">
         <span>👤</span>
       </div>
       {/* Soft shadow */}

@@ -25,7 +25,7 @@ const Projects: React.FC = () => {
   return (
     <div className="relative min-h-screen w-full flex flex-col justify-center items-center overflow-x-hidden">
       {/* Background Gradient & Glassmorphism */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-purple-700/40 via-pink-500/30 to-blue-600/40 dark:from-purple-900/60 dark:via-pink-900/40 dark:to-blue-900/60 backdrop-blur-xl" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-teal-700/40 via-cyan-500/30 to-emerald-600/40 dark:from-teal-900/60 dark:via-cyan-900/40 dark:to-emerald-900/60 backdrop-blur-xl" />
       <div className="mx-auto max-w-6xl w-full space-y-12 py-16 px-4">
         {/* Header */}
       <motion.section
@@ -46,7 +46,7 @@ const Projects: React.FC = () => {
         >
           My{' '}
           <motion.span 
-            className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-500 bg-clip-text text-transparent"
+            className="bg-gradient-to-r from-teal-600 via-cyan-600 to-emerald-500 bg-clip-text text-transparent"
             animate={{ 
               backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
             }}

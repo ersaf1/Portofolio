@@ -45,7 +45,7 @@ const LanguageSwitcher: React.FC = () => {
                 <span className="text-sm font-medium">{lang.name}</span>
               </div>
               {language === lang.code && (
-                <Check className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                <Check className="w-4 h-4 text-teal-600 dark:text-teal-400" />
               )}
             </DropdownMenu.Item>
           ))}
