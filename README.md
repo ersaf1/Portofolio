@@ -47,18 +47,34 @@ Frontend Developer and UI/UX Designer specializing in:
 
 ## 🚀 Quick Start
 
+This project uses pnpm. If you don't have pnpm installed, you can enable it via Corepack (recommended) or install it globally.
+
+Corepack (recommended, Node >=16.14):
+
+```powershell
+corepack enable; corepack prepare pnpm@8.9.0 --activate
+```
+
+Or install with npm:
+
+```powershell
+# npm install -g pnpm
+```
+
+Then use pnpm commands below:
+
 ```powershell
 # Install dependencies
-npm install
+pnpm install
 
 # Run development server
-npm run dev
+pnpm run dev
 
 # Build for production
-npm run build
+pnpm run build
 
 # Preview production build
-npm run preview
+pnpm run preview
 ```
 
 ## 📂 Project Structure
