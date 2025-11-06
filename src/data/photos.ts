@@ -4,7 +4,7 @@ const BASE = (import.meta as any).env?.BASE_URL || '/'
 const photoPath = (name: string) => `${BASE}photos/${name}`
 
 export const photos = [
-  photoPath('hero.jpg'),
+  photoPath('hero.jpg'), 
   photoPath('1.jpg'),
   photoPath('2.jpg'),
   photoPath('3.jpg'),
