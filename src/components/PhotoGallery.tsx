@@ -45,7 +45,8 @@ export default function PhotoGallery() {
                 layoutId={`photo-${i}`}
                 src={src}
                 alt={`Galeri ${i + 1}`}
-                className={`${openIdx === i ? 'opacity-0' : 'object-cover'} w-full h-full`}
+                className="object-cover w-full h-full"
+                style={{ visibility: openIdx === i ? 'hidden' as const : 'visible' as const }}
                 loading="lazy"
                 onError={() => {
                   // Pakai foto random agar tetap tampil

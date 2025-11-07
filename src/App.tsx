@@ -8,7 +8,6 @@ import Gallery from './pages/Gallery'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ParticleBackground from './components/ParticleBackground'
-import CursorTrail from './components/CursorTrail'
 import { LanguageProvider } from './context/LanguageContext'
 
 const App: React.FC = () => {
@@ -18,7 +17,6 @@ const App: React.FC = () => {
     <LanguageProvider>
       <div className="min-h-screen flex flex-col relative">
         <ParticleBackground />
-        <CursorTrail />
         <Navbar />
         <AnimatePresence mode="wait">
           <motion.main
