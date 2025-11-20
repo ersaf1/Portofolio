@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import Gallery from './pages/Gallery'
+import FunFacts from './pages/FunFacts'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ParticleBackground from './components/ParticleBackground'
@@ -47,6 +48,7 @@ const App: React.FC = () => {
             <Routes location={location}>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
+              <Route path="/funfacts" element={<FunFacts />} />
               <Route path="/galery" element={<Gallery />} />
               <Route path="/gallery" element={<Gallery />} />
               <Route path="/contact" element={<Contact />} />
