@@ -23,27 +23,39 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
       >
         {/* Project Image Placeholder */}
         <motion.div 
-          className="w-full h-48 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-xl mb-4 flex items-center justify-center overflow-hidden relative"
+          className={`w-full h-48 rounded-xl mb-4 flex items-center justify-center overflow-hidden relative ${
+            project.image ? 'bg-white' : 'bg-gradient-to-br from-purple-500/20 to-pink-500/20'
+          }`}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
         >
-          <motion.div 
-            className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-pink-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          />
-          <motion.div 
-            className="text-6xl opacity-50 relative z-10"
-            animate={{ 
-              rotate: [0, 5, -5, 0],
-              scale: [1, 1.1, 1]
-            }}
-            transition={{ 
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            🚀
-          </motion.div>
+          {project.image ? (
+            <img 
+              src={project.image} 
+              alt={project.title} 
+              className="w-full h-full object-contain p-4"
+            />
+          ) : (
+            <>
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-pink-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              />
+              <motion.div 
+                className="text-6xl opacity-50 relative z-10"
+                animate={{ 
+                  rotate: [0, 5, -5, 0],
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{ 
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                🚀
+              </motion.div>
+            </>
+          )}
         </motion.div>
 
         {/* Title */}

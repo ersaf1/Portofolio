@@ -155,11 +155,21 @@ const ProjectDetail: React.FC = () => {
         transition={{ delay: 0.7 }}
         className="glass rounded-3xl p-8"
       >
-        <div className="w-full h-96 bg-gradient-to-br from-teal-500/20 to-cyan-500/20 rounded-2xl flex items-center justify-center">
-          <div className="text-center">
-            <div className="text-8xl mb-4">🚀</div>
-            <p className="text-slate-500 dark:text-slate-400">Project Screenshot</p>
-          </div>
+        <div className={`w-full h-96 rounded-2xl flex items-center justify-center overflow-hidden ${
+          project.image ? 'bg-white' : 'bg-gradient-to-br from-teal-500/20 to-cyan-500/20'
+        }`}>
+          {project.image ? (
+            <img 
+              src={project.image} 
+              alt={project.title} 
+              className="w-full h-full object-contain p-8"
+            />
+          ) : (
+            <div className="text-center">
+              <div className="text-8xl mb-4">🚀</div>
+              <p className="text-slate-500 dark:text-slate-400">Project Screenshot</p>
+            </div>
+          )}
         </div>
       </motion.div>
     </motion.article>

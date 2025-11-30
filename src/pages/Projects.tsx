@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import * as Tabs from '@radix-ui/react-tabs'
 import ProjectCard from '../components/ProjectCard'
+import GitHubRepos from '../components/GitHubRepos'
 import { projects } from '../data/projects'
 
 const Projects: React.FC = () => {
@@ -11,7 +12,7 @@ const Projects: React.FC = () => {
     { value: 'all', label: 'All Projects', count: projects.length },
     { value: 'web', label: 'Web Apps', count: projects.filter(p => p.tech.includes('React')).length },
     { value: 'design', label: 'UI/UX', count: projects.filter(p => p.tech.includes('Figma')).length },
-    { value: 'other', label: 'Others', count: 2 }
+    { value: 'github', label: 'Open Source', count: '∞' }
   ]
 
   const filteredProjects = activeTab === 'all' 
@@ -123,52 +124,62 @@ const Projects: React.FC = () => {
           </motion.div>
 
           <Tabs.Content value={activeTab}>
-            <motion.div
-              key={activeTab}
-              initial="hidden"
-              animate="visible"
-              variants={{
-                hidden: {},
-                visible: {
-                  transition: {
-                    staggerChildren: 0.15
-                  }
-                }
-              }}
-              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 bg-white/70 dark:bg-slate-900/60 rounded-2xl p-6 shadow-xl border border-slate-200 dark:border-slate-800"
-            >
-              {filteredProjects.map((p, idx) => (
-                <motion.div
-                  key={p.id}
-                  variants={{
-                    hidden: { 
-                      opacity: 0, 
-                      y: 30, 
-                      scale: 0.9,
-                      rotateX: -15 
-                    },
-                    visible: { 
-                      opacity: 1, 
-                      y: 0, 
-                      scale: 1,
-                      rotateX: 0,
-                      transition: {
-                        type: "spring",
-                        stiffness: 100,
-                        damping: 15
-                      }
+            {activeTab === 'github' ? (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <GitHubRepos />
+              </motion.div>
+            ) : (
+              <motion.div
+                key={activeTab}
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  hidden: {},
+                  visible: {
+                    transition: {
+                      staggerChildren: 0.15
                     }
-                  }}
-                  whileHover={{
-                    y: -8,
-                    rotateY: 5,
-                    transition: { duration: 0.3 }
-                  }}
-                >
-                  <ProjectCard project={p} />
-                </motion.div>
-              ))}
-            </motion.div>
+                  }
+                }}
+                className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 bg-white/70 dark:bg-slate-900/60 rounded-2xl p-6 shadow-xl border border-slate-200 dark:border-slate-800"
+              >
+                {filteredProjects.map((p, idx) => (
+                  <motion.div
+                    key={p.id}
+                    variants={{
+                      hidden: { 
+                        opacity: 0, 
+                        y: 30, 
+                        scale: 0.9,
+                        rotateX: -15 
+                      },
+                      visible: { 
+                        opacity: 1, 
+                        y: 0, 
+                        scale: 1,
+                        rotateX: 0,
+                        transition: {
+                          type: "spring",
+                          stiffness: 100,
+                          damping: 15
+                        }
+                      }
+                    }}
+                    whileHover={{
+                      y: -8,
+                      rotateY: 5,
+                      transition: { duration: 0.3 }
+                    }}
+                  >
+                    <ProjectCard project={p} />
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
           </Tabs.Content>
         </Tabs.Root>
       </motion.div>

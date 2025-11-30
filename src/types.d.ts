@@ -6,6 +6,7 @@ export interface Project {
   tech: string[]
   repo?: string
   demo?: string
+  image?: string
 }
 
 // Deklarasi tipe untuk import file gambar
