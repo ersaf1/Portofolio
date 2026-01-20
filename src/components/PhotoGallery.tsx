@@ -5,10 +5,11 @@ import PhotoLightbox from './PhotoLightbox'
 // Ambil SEMUA gambar dari folder src/assets (subfolder juga) secara otomatis
 // Vite akan mengubahnya menjadi URL yang bisa dipakai di <img>
 const useAssetImages = () => {
-  const modules = import.meta.glob('../assets/**/*.{png,jpg,jpeg,webp,gif,svg}', {
+  const modules = import.meta.glob<string>('../assets/**/*.{png,jpg,jpeg,webp,gif,svg}', {
     eager: true,
-    as: 'url',
-  }) as Record<string, string>
+    query: '?url',
+    import: 'default',
+  })
 
   // Urutkan berdasarkan path agar konsisten
   const urls = Object.entries(modules)
@@ -48,13 +49,16 @@ export default function PhotoGallery() {
                 className="object-cover w-full h-full"
                 style={{ visibility: openIdx === i ? 'hidden' as const : 'visible' as const }}
                 loading="lazy"
-                onError={() => {
-                  // Pakai foto random agar tetap tampil
+                onError={(e) => {
+                  // Pakai foto random agar tetap tampil.
+                  // Set langsung ke element untuk menghindari race (error berulang sebelum re-render).
                   if (!fallbackTried[i]) {
+                    const placeholder = placeholderFor(i)
+                    ;(e.currentTarget as HTMLImageElement).src = placeholder
                     setFallbackTried((ft) => ({ ...ft, [i]: true }))
                     setSrcs((curr) => {
                       const next = [...curr]
-                      next[i] = placeholderFor(i)
+                      next[i] = placeholder
                       return next
                     })
                   } else {

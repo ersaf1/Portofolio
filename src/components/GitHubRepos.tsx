@@ -38,8 +38,46 @@ const GitHubRepos: React.FC = () => {
     fetchRepos()
   }, [])
 
-  if (loading) return <div className="text-center py-10">Loading GitHub repositories...</div>
-  if (error) return null // Silently fail or show error
+  if (loading) {
+    return (
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {[...Array(6)].map((_, i) => (
+          <div key={i} className="glass p-6 rounded-2xl h-48 animate-pulse flex flex-col">
+            <div className="flex justify-between items-center mb-4">
+              <div className="w-8 h-8 bg-slate-400/20 rounded-full" />
+              <div className="w-16 h-4 bg-slate-400/20 rounded" />
+            </div>
+            <div className="w-3/4 h-6 bg-slate-400/20 rounded mb-3" />
+            <div className="space-y-2 flex-1">
+              <div className="w-full h-4 bg-slate-400/20 rounded" />
+              <div className="w-2/3 h-4 bg-slate-400/20 rounded" />
+            </div>
+            <div className="flex gap-2 mt-4">
+              <div className="w-12 h-5 bg-slate-400/20 rounded" />
+              <div className="w-12 h-5 bg-slate-400/20 rounded" />
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-10">
+        <Github className="w-12 h-12 mx-auto text-slate-400 mb-3" />
+        <p className="text-slate-600 dark:text-slate-400 mb-4">{error}</p>
+        <a 
+          href="https://github.com/ersaf1" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-teal-500 font-medium hover:underline"
+        >
+          View GitHub Profile
+        </a>
+      </div>
+    )
+  }
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

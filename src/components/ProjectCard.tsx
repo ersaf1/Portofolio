@@ -23,8 +23,8 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
       >
         {/* Project Image Placeholder */}
         <motion.div 
-          className={`w-full h-48 rounded-xl mb-4 flex items-center justify-center overflow-hidden relative ${
-            project.image ? 'bg-white' : 'bg-gradient-to-br from-purple-500/20 to-pink-500/20'
+          className={`w-full aspect-square rounded-xl mb-4 flex items-center justify-center overflow-hidden relative ${
+            project.image ? 'bg-slate-100 dark:bg-slate-800' : 'bg-gradient-to-br from-purple-500/20 to-pink-500/20'
           }`}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
@@ -33,7 +33,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
             <img 
               src={project.image} 
               alt={project.title} 
-              className="w-full h-full object-contain p-4"
+              className="w-full h-full object-cover"
             />
           ) : (
             <>
@@ -110,39 +110,47 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
         {/* Links */}
         <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-700">
           <div className="flex gap-3">
-            <Tooltip.Root>
-              <Tooltip.Trigger asChild>
-                <a
-                  href="#"
-                  className="p-2 hover:bg-white/60 dark:hover:bg-slate-700/60 rounded-lg transition-all"
-                  aria-label="View code"
-                >
-                  <Github className="w-4 h-4" />
-                </a>
-              </Tooltip.Trigger>
-              <Tooltip.Portal>
-                <Tooltip.Content className="glass px-3 py-2 text-xs rounded-lg shadow-lg z-50" sideOffset={5}>
-                  View Source Code
-                </Tooltip.Content>
-              </Tooltip.Portal>
-            </Tooltip.Root>
+            {project.repo && (
+              <Tooltip.Root>
+                <Tooltip.Trigger asChild>
+                  <a
+                    href={project.repo}
+                    className="p-2 hover:bg-white/60 dark:hover:bg-slate-700/60 rounded-lg transition-all"
+                    aria-label="View code"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Github className="w-4 h-4" />
+                  </a>
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Content className="glass px-3 py-2 text-xs rounded-lg shadow-lg z-50" sideOffset={5}>
+                    View Source Code
+                  </Tooltip.Content>
+                </Tooltip.Portal>
+              </Tooltip.Root>
+            )}
 
-            <Tooltip.Root>
-              <Tooltip.Trigger asChild>
-                <a
-                  href="#"
-                  className="p-2 hover:bg-white/60 dark:hover:bg-slate-700/60 rounded-lg transition-all"
-                  aria-label="View live demo"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              </Tooltip.Trigger>
-              <Tooltip.Portal>
-                <Tooltip.Content className="glass px-3 py-2 text-xs rounded-lg shadow-lg z-50" sideOffset={5}>
-                  View Live Demo
-                </Tooltip.Content>
-              </Tooltip.Portal>
-            </Tooltip.Root>
+            {project.demo && (
+              <Tooltip.Root>
+                <Tooltip.Trigger asChild>
+                  <a
+                    href={project.demo}
+                    className="p-2 hover:bg-white/60 dark:hover:bg-slate-700/60 rounded-lg transition-all"
+                    aria-label="View live demo"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Content className="glass px-3 py-2 text-xs rounded-lg shadow-lg z-50" sideOffset={5}>
+                    View Live Demo
+                  </Tooltip.Content>
+                </Tooltip.Portal>
+              </Tooltip.Root>
+            )}
           </div>
           <Link
             to={`/projects/${project.id}`}

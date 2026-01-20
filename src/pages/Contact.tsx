@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
+import emailjs from '@emailjs/browser'
 import { Mail, MessageSquare, Send, CheckCircle, Github, Linkedin, Instagram } from 'lucide-react'
 import HeroPortrait from '../components/HeroPortrait'
 import ScatteredPhotos from '../components/ScatteredPhotos'
@@ -10,6 +11,7 @@ const Contact: React.FC = () => {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const formRef = useRef<HTMLFormElement>(null)
 
   return (
     <div className="mx-auto max-w-5xl space-y-12">
@@ -121,29 +123,27 @@ const Contact: React.FC = () => {
             </motion.div>
           ) : (
             <form
+              ref={formRef}
               onSubmit={async (e) => {
                 e.preventDefault()
                 setError(null)
                 setLoading(true)
+                if (!formRef.current) return
+
                 try {
-                  const form = e.currentTarget as HTMLFormElement
-                  const fd = new FormData(form)
-                  const payload = {
-                    name: String(fd.get('name') || ''),
-                    email: String(fd.get('email') || ''),
-                    message: String(fd.get('message') || ''),
-                  }
-                  const res = await fetch('/api/send-email', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
-                  })
-                  if (!res.ok) throw new Error('Failed to send')
+                  // Ganti dengan Service ID, Template ID dan Public Key dari EmailJS Anda
+                  // Buat akun di https://www.emailjs.com/
+                  const serviceId = 'service_17875m8'
+                  const templateId = 'template_a8pxdjm' 
+                  const publicKey = '9zbYFy_ilaYAZac-J'
+
+                  await emailjs.sendForm(serviceId, templateId, formRef.current, publicKey)
+                  
                   setSubmitted(true)
-                  form.reset()
+                  formRef.current.reset()
                 } catch (err) {
                   console.error(err)
-                  setError('Gagal mengirim pesan. Coba lagi nanti atau kirim email ke ersafrexx@gmail.com')
+                  setError('Gagal mengirim pesan. Pastikan konfigurasi EmailJS sudah benar atau kirim manual ke ersafrexx@gmail.com')
                 } finally {
                   setLoading(false)
                 }

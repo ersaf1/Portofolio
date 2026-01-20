@@ -155,14 +155,14 @@ const ProjectDetail: React.FC = () => {
         transition={{ delay: 0.7 }}
         className="glass rounded-3xl p-8"
       >
-        <div className={`w-full h-96 rounded-2xl flex items-center justify-center overflow-hidden ${
-          project.image ? 'bg-white' : 'bg-gradient-to-br from-teal-500/20 to-cyan-500/20'
+        <div className={`w-full rounded-2xl flex items-center justify-center overflow-hidden min-h-[300px] ${
+          project.image ? 'bg-slate-100 dark:bg-slate-800' : 'bg-gradient-to-br from-teal-500/20 to-cyan-500/20'
         }`}>
           {project.image ? (
             <img 
               src={project.image} 
               alt={project.title} 
-              className="w-full h-full object-contain p-8"
+              className="w-full h-full object-cover"
             />
           ) : (
             <div className="text-center">

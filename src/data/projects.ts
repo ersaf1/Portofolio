@@ -1,5 +1,4 @@
 import { Project } from '../types'
-import skanidaLogo from '../assets/skanida-logo.svg'
 
 /*
   TEMPLATE PROJECT
@@ -24,7 +23,6 @@ export const projects: Project[] = [
     summary: 'Platform digital terintegrasi untuk SMKN 2 Magelang (E-Presensi, Jurnal, dll).',
     description: 'Skanida Apps adalah solusi digital komprehensif untuk lingkungan sekolah SMKN 2 Magelang. Aplikasi ini mencakup sistem presensi elektronik (E-Presensi), jurnal kegiatan siswa, dan berbagai fitur administratif lainnya untuk memudahkan manajemen sekolah.',
     tech: ['React', 'TypeScript', 'Vite', 'Tailwind', 'PWA'],
-    image: skanidaLogo,
     demo: 'https://skanida.app'
   },
   {
