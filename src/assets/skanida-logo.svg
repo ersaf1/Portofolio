@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Skanida">
+	<defs>
+		<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+			<stop offset="0" stop-color="#0f172a" />
+			<stop offset="1" stop-color="#1e293b" />
+		</linearGradient>
+		<linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+			<stop offset="0" stop-color="#38bdf8" />
+			<stop offset="1" stop-color="#a78bfa" />
+		</linearGradient>
+	</defs>
+
+	<rect width="512" height="512" rx="96" fill="url(#bg)" />
+	<circle cx="156" cy="210" r="78" fill="none" stroke="url(#accent)" stroke-width="18" />
+	<path d="M116 252 L196 170" stroke="url(#accent)" stroke-width="18" stroke-linecap="round" />
+</svg>
