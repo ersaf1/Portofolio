@@ -5,16 +5,40 @@ import PhotoLightbox from './PhotoLightbox'
 // Ambil SEMUA gambar dari folder src/assets (subfolder juga) secara otomatis
 // Vite akan mengubahnya menjadi URL yang bisa dipakai di <img>
 const useAssetImages = () => {
-  const modules = import.meta.glob<string>('../assets/**/*.{png,jpg,jpeg,webp,gif,svg}', {
+  // Catatan:
+  // - Kita sengaja TIDAK mengambil .svg agar logo/ikon tidak ikut masuk galeri.
+  // - Kita dedupe nama file yang umumnya hasil copy (mis. " (1)") supaya tidak tampil dobel.
+  const modules = import.meta.glob<string>('../assets/**/*.{png,jpg,jpeg,webp,gif}', {
     eager: true,
     query: '?url',
     import: 'default',
   })
 
-  // Urutkan berdasarkan path agar konsisten
-  const urls = Object.entries(modules)
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([, url]) => url)
+  const normalizeBaseName = (filePath: string) => {
+    const base = (filePath.split('/').pop() || filePath).toLowerCase()
+    // Hapus suffix duplikat umum: " (1)", " (2)", dst sebelum ekstensi.
+    return base.replace(/\s*\(\d+\)(?=\.[^.]+$)/, '')
+  }
+
+  const IGNORED_BASENAMES = new Set<string>([
+    // Aset non-galeri yang sering ada di assets.
+    'profile.png',
+    'placeholder.txt',
+  ])
+
+  const entries = Object.entries(modules)
+    .filter(([path]) => !IGNORED_BASENAMES.has((path.split('/').pop() || path).toLowerCase()))
+    .sort(([a], [b]) => normalizeBaseName(a).localeCompare(normalizeBaseName(b)))
+
+  const seen = new Set<string>()
+  const urls: string[] = []
+  for (const [path, url] of entries) {
+    const key = normalizeBaseName(path)
+    if (seen.has(key)) continue
+    seen.add(key)
+    urls.push(url)
+  }
+
   return urls
 }
 
@@ -37,7 +61,7 @@ export default function PhotoGallery() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {srcs.map((src, i) => (
           <figure
-            key={i}
+            key={src || i}
             className="overflow-hidden rounded-xl shadow-lg bg-slate-900/20 h-64 relative cursor-pointer"
             onClick={() => setOpenIdx(i)}
           >
