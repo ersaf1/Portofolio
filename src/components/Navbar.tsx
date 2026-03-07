@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
   const links = [
     { to: '/', label: t('nav.home') },
     { to: '/about', label: t('nav.about') },
-    { to: '/funfacts', label: 'Fun Facts' },
+    { to: '/projects', label: 'My Projects' },
     { to: '/galery', label: t('nav.gallery') },
     { to: '/contact', label: t('nav.contact') }
   ]
