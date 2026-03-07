@@ -10,9 +10,11 @@ const Navbar: React.FC = () => {
   const { t } = useLanguage()
   const [dark, setDark] = useState<boolean>(() => {
     try {
-      return localStorage.getItem('theme') === 'dark'
+      const saved = localStorage.getItem('theme')
+      // Default to dark mode if never set
+      return saved === null ? true : saved === 'dark'
     } catch {
-      return false
+      return true
     }
   })
   
@@ -54,8 +56,8 @@ const Navbar: React.FC = () => {
               to={l.to}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                 location.pathname === l.to 
-                  ? 'bg-slate-700 dark:bg-slate-600 text-white shadow-lg' 
-                  : 'hover:bg-white/60 dark:hover:bg-slate-700/60'
+                  ? 'bg-white/15 text-white border border-white/30 shadow-lg' 
+                  : 'text-gray-300 hover:bg-white/10 hover:text-white'
               }`}
             >
               {l.label}
@@ -68,7 +70,7 @@ const Navbar: React.FC = () => {
           <button
             onClick={() => setDark((d) => !d)}
             aria-label="Toggle dark mode"
-            className="ml-2 p-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-700/60 transition-all duration-300"
+            className="ml-2 p-2 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-all duration-300"
           >
             {dark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
@@ -77,7 +79,7 @@ const Navbar: React.FC = () => {
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
               <button
-                className="ml-2 p-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-700/60 transition-all duration-300"
+                className="ml-2 p-2 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-all duration-300"
                 aria-label="Profile menu"
               >
                 <User className="w-5 h-5" />
@@ -89,7 +91,7 @@ const Navbar: React.FC = () => {
                 className="glass rounded-xl p-2 min-w-[200px] shadow-2xl z-50"
                 sideOffset={5}
               >
-                <DropdownMenu.Item className="px-4 py-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-700/60 cursor-pointer outline-none flex items-center gap-2">
+                <DropdownMenu.Item className="px-4 py-2 rounded-lg hover:bg-white/10 hover:text-white cursor-pointer outline-none flex items-center gap-2 text-gray-300">
                   <User className="w-4 h-4" />
                   <span>Profile</span>
                 </DropdownMenu.Item>
@@ -97,21 +99,21 @@ const Navbar: React.FC = () => {
                 <DropdownMenu.Item asChild>
                   <a
                     href="mailto:ersafrexx@gmail.com"
-                    className="px-4 py-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-700/60 cursor-pointer outline-none flex items-center gap-2"
+                    className="px-4 py-2 rounded-lg hover:bg-white/10 hover:text-white cursor-pointer outline-none flex items-center gap-2 text-gray-300"
                   >
                     <Mail className="w-4 h-4" />
                     <span>Contact</span>
                   </a>
                 </DropdownMenu.Item>
 
-                <DropdownMenu.Item className="px-4 py-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-700/60 cursor-pointer outline-none flex items-center gap-2">
+                <DropdownMenu.Item className="px-4 py-2 rounded-lg hover:bg-white/10 hover:text-white cursor-pointer outline-none flex items-center gap-2 text-gray-300">
                   <FileText className="w-4 h-4" />
                   <span>Resume</span>
                 </DropdownMenu.Item>
 
-                <DropdownMenu.Separator className="h-px bg-slate-200 dark:bg-slate-700 my-2" />
+                <DropdownMenu.Separator className="h-px bg-white/10 my-2" />
 
-                <DropdownMenu.Item className="px-4 py-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-700/60 cursor-pointer outline-none flex items-center gap-2">
+                <DropdownMenu.Item className="px-4 py-2 rounded-lg hover:bg-white/10 hover:text-white cursor-pointer outline-none flex items-center gap-2 text-gray-300">
                   <Download className="w-4 h-4" />
                   <span>Download CV</span>
                 </DropdownMenu.Item>
@@ -123,7 +125,7 @@ const Navbar: React.FC = () => {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden p-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-700/60"
+          className="md:hidden p-2 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white"
           aria-label="Toggle menu"
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -147,8 +149,8 @@ const Navbar: React.FC = () => {
                   onClick={() => setMobileOpen(false)}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                     location.pathname === l.to 
-                      ? 'bg-slate-700 dark:bg-slate-600 text-white' 
-                      : 'hover:bg-white/60 dark:hover:bg-slate-700/60'
+                      ? 'bg-white/15 text-white border border-white/30' 
+                      : 'text-gray-300 hover:bg-white/10 hover:text-white'
                   }`}
                 >
                   {l.label}
@@ -162,7 +164,7 @@ const Navbar: React.FC = () => {
               
               <button
                 onClick={() => setDark((d) => !d)}
-                className="px-4 py-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-700/60 transition-all flex items-center gap-2"
+                className="px-4 py-2 rounded-lg hover:bg-white/10 text-gray-300 hover:text-white transition-all flex items-center gap-2"
               >
                 {dark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                 {dark ? 'Light Mode' : 'Dark Mode'}

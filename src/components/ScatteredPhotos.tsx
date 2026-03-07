@@ -3,11 +3,11 @@ import { motion } from 'framer-motion'
 // Abstract gradient blobs for aesthetic background
 
 const BLOB_COLORS = [
-  'from-teal-500 via-cyan-500 to-emerald-500',
-  'from-cyan-500 via-teal-500 to-emerald-400',
-  'from-emerald-500 via-teal-500 to-cyan-400',
-  'from-teal-400 via-emerald-500 to-cyan-500',
-  'from-cyan-400 via-emerald-400 to-teal-500',
+  'from-white/5 via-gray-400/5 to-gray-600/5',
+  'from-gray-300/5 via-gray-500/5 to-gray-700/5',
+  'from-gray-200/5 via-gray-400/5 to-gray-600/5',
+  'from-white/5 via-gray-300/5 to-gray-500/5',
+  'from-gray-400/5 via-gray-600/5 to-gray-800/5',
 ]
 
 const ScatteredPhotos: React.FC = () => {

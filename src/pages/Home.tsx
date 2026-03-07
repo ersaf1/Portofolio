@@ -130,7 +130,7 @@ const Home: React.FC = () => {
               {t('home.greeting')}{' '}
             </motion.span>
             <motion.span 
-              className="bg-gradient-to-r from-teal-600 via-cyan-600 to-emerald-500 bg-clip-text text-transparent"
+              className="bg-gradient-to-r from-gray-200 via-white to-gray-300 bg-clip-text text-transparent"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ 
@@ -154,28 +154,28 @@ const Home: React.FC = () => {
               transition={{ delay: 0.4, duration: 0.5 }}
               className="text-center space-y-2"
             >
-              <p className="text-lg md:text-xl text-teal-600 dark:text-teal-400 font-semibold">
+              <p className="text-lg md:text-xl text-gray-300 font-semibold">
                 {t('home.school')}
               </p>
-              <p className="text-base md:text-lg text-slate-600 dark:text-slate-400">
+              <p className="text-base md:text-lg text-gray-400">
                 {t('home.major')}
               </p>
             </motion.div>
           </div>
           
           <motion.div 
-            className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-8 h-8 flex items-center justify-center gap-2"
+            className="text-xl md:text-2xl text-slate-300 mb-8 h-8 flex items-center justify-center gap-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <Sparkles className="w-6 h-6 text-teal-500" />
+            <Sparkles className="w-6 h-6 text-gray-400" />
             <span>{typedText}</span>
             <span className="animate-pulse">|</span>
           </motion.div>
 
           <motion.p 
-            className="text-lg text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed"
+            className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.5 }}
@@ -184,7 +184,7 @@ const Home: React.FC = () => {
           </motion.p>
           
           <motion.p 
-            className="text-base text-slate-500 dark:text-slate-400 mb-12 max-w-xl mx-auto"
+            className="text-base text-slate-400 mb-12 max-w-xl mx-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.6 }}
@@ -210,7 +210,7 @@ const Home: React.FC = () => {
             >
               <Link 
                 to="/projects"
-                className="px-8 py-4 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-3xl font-semibold shadow-xl transition-all duration-300 flex items-center gap-2 relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                className="px-8 py-4 bg-gradient-to-r from-gray-700 to-gray-500 text-white rounded-3xl font-semibold shadow-xl transition-all duration-300 flex items-center gap-2 relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-gray-400"
               >
                 {/* aura gradient removed for hover */}
                 <motion.span className="relative z-10">{t('home.cta.projects')}</motion.span>
@@ -229,7 +229,7 @@ const Home: React.FC = () => {
             >
               <Link 
                 to="/contact"
-                className="px-8 py-4 glass rounded-xl font-semibold hover:shadow-xl transition-all duration-300 backdrop-blur-sm border border-white/20 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-400"
+                className="px-8 py-4 glass rounded-xl font-semibold hover:shadow-xl transition-all duration-300 backdrop-blur-sm border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-gray-400"
               >
                 {t('home.cta.contact')}
               </Link>
@@ -278,19 +278,19 @@ const Home: React.FC = () => {
                 icon: <Code className="w-8 h-8" />,
                 title: t('home.feature1.title'),
                 desc: t('home.feature1.desc'),
-                gradient: 'from-emerald-500 to-teal-500'
+                gradient: 'from-gray-600 to-gray-400'
               },
               {
                 icon: <Palette className="w-8 h-8" />,
                 title: t('home.feature2.title'),
                 desc: t('home.feature2.desc'),
-                gradient: 'from-teal-500 to-cyan-500'
+                gradient: 'from-gray-500 to-gray-300'
               },
               {
                 icon: <Zap className="w-8 h-8" />,
                 title: t('home.feature3.title'),
                 desc: t('home.feature3.desc'),
-                gradient: 'from-cyan-500 to-sky-500'
+                gradient: 'from-neutral-600 to-neutral-400'
               }
             ].map((item, idx) => (
               <motion.div
@@ -328,11 +328,11 @@ const Home: React.FC = () => {
                 </motion.div>
                 <motion.h3 
                   className="text-xl font-bold mb-3"
-                  whileHover={{ color: "#8b5cf6" }}
+                  whileHover={{ color: "#d1d5db" }}
                 >
                   {item.title}
                 </motion.h3>
-                <p className="text-slate-600 dark:text-slate-400">{item.desc}</p>
+                <p className="text-gray-400">{item.desc}</p>
               </motion.div>
             ))}
           </motion.div>

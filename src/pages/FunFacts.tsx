@@ -13,49 +13,49 @@ const FunFacts: React.FC = () => {
       icon: <Coffee className="w-8 h-8" />,
       title: ' Fleksibel',
       description: 'Suka apa saja sesuai mood',
-      color: 'from-amber-500 to-orange-500'
+      color: 'from-gray-600 to-gray-400'
     },
     {
       icon: <Music className="w-8 h-8" />,
       title: 'Music Enthusiast',
       description: 'Suka dengerin musik pas stress numpuk,apalagi lagunya kasih putih wak',
-      color: 'from-purple-500 to-pink-500'
+      color: 'from-gray-700 to-gray-500'
     },
     {
       icon: <Gamepad2 className="w-8 h-8" />,
       title: 'Gamer',
       description: 'MOBILE LEGENDS sejati dan pemuja roblox',
-      color: 'from-blue-500 to-cyan-500'
+      color: 'from-gray-500 to-gray-400'
     },
     {
       icon: <Book className="w-8 h-8" />,
       title: 'Bookworm',
       description: 'Suka baca buku yg relate aja',
-      color: 'from-green-500 to-teal-500'
+      color: 'from-gray-600 to-gray-500'
     },
     {
       icon: <Camera className="w-8 h-8" />,
       title: 'Travel',
       description: 'Hobi keluar kesana kesini tapi nunggu duit dulu',
-      color: 'from-red-500 to-rose-500'
+      color: 'from-gray-700 to-gray-600'
     },
     {
       icon: <Plane className="w-8 h-8" />,
       title: 'Food Fav',
       description: 'MIE AYAM SAMPING SMEA JUARAA BOLO',
-      color: 'from-indigo-500 to-purple-500'
+      color: 'from-gray-500 to-gray-300'
     },
     {
       icon: <Code className="w-8 h-8" />,
       title: 'Code at Night',
       description: 'Lebih produktif coding di malam hari. nokturnal jier!',
-      color: 'from-slate-500 to-gray-500'
+      color: 'from-gray-600 to-gray-500'
     },
     {
       icon: <Heart className="w-8 h-8" />,
       title: 'Open Source',
       description: 'Kontribusi ke open source projects saat ada waktu luang',
-      color: 'from-pink-500 to-red-500'
+      color: 'from-gray-500 to-gray-400'
     }
   ]
 
@@ -124,7 +124,7 @@ const FunFacts: React.FC = () => {
         </h2>
         <div className="grid md:grid-cols-2 gap-6">
           <div className="flex items-start gap-4">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center flex-shrink-0 mt-1">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-gray-600 to-gray-500 flex items-center justify-center flex-shrink-0 mt-1">
               <span className="text-white font-bold">1</span>
             </div>
             <div>
@@ -135,7 +135,7 @@ const FunFacts: React.FC = () => {
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0 mt-1">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-gray-700 to-gray-500 flex items-center justify-center flex-shrink-0 mt-1">
               <span className="text-white font-bold">2</span>
             </div>
             <div>
@@ -146,7 +146,7 @@ const FunFacts: React.FC = () => {
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center flex-shrink-0 mt-1">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-gray-600 to-gray-400 flex items-center justify-center flex-shrink-0 mt-1">
               <span className="text-white font-bold">3</span>
             </div>
             <div>
@@ -157,7 +157,7 @@ const FunFacts: React.FC = () => {
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center flex-shrink-0 mt-1">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-gray-500 to-gray-400 flex items-center justify-center flex-shrink-0 mt-1">
               <span className="text-white font-bold">4</span>
             </div>
             <div>
@@ -179,7 +179,7 @@ const FunFacts: React.FC = () => {
       >
         <div className="glass rounded-2xl p-6 text-center">
           <div className="text-4xl font-bold gradient-text mb-2">70+</div>
-          <div className="text-slate-600 dark:text-slate-400">Cups of Tea</div>
+          <div className="text-slate-600 dark:text-gray-400">Cups of Tea</div>
           <div className="text-xs text-slate-500 mt-1">per month</div>
         </div>
         <div className="glass rounded-2xl p-6 text-center">

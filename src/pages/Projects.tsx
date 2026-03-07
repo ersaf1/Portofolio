@@ -26,7 +26,7 @@ const Projects: React.FC = () => {
   return (
     <div className="relative min-h-screen w-full flex flex-col justify-center items-center overflow-x-hidden">
       {/* Background Gradient & Glassmorphism */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-teal-700/40 via-cyan-500/30 to-emerald-600/40 dark:from-teal-900/60 dark:via-cyan-900/40 dark:to-emerald-900/60 backdrop-blur-xl" />
+      <div className="absolute inset-0 -z-10 bg-black/60 backdrop-blur-xl" />
       <div className="mx-auto max-w-6xl w-full space-y-12 py-16 px-4">
         {/* Header */}
       <motion.section
@@ -47,7 +47,7 @@ const Projects: React.FC = () => {
         >
           My{' '}
           <motion.span 
-            className="bg-gradient-to-r from-teal-600 via-cyan-600 to-emerald-500 bg-clip-text text-transparent"
+            className="bg-gradient-to-r from-gray-200 via-white to-gray-300 bg-clip-text text-transparent"
             animate={{ 
               backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
             }}
@@ -105,12 +105,12 @@ const Projects: React.FC = () => {
                   value={category.value}
                   className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 relative overflow-hidden ${
                     activeTab === category.value
-                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
+                      ? 'bg-gradient-to-r from-gray-600 to-gray-400 text-white shadow-lg'
                       : 'glass hover:shadow-lg hover:scale-105'
                   }`}
                 >
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0"
+                    className="absolute inset-0 bg-gradient-to-r from-gray-700 to-gray-500 opacity-0"
                     whileHover={{ opacity: activeTab !== category.value ? 0.1 : 0 }}
                     transition={{ duration: 0.2 }}
                   />
@@ -145,7 +145,7 @@ const Projects: React.FC = () => {
                     }
                   }
                 }}
-                className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 bg-white/70 dark:bg-slate-900/60 rounded-2xl p-6 shadow-xl border border-slate-200 dark:border-slate-800"
+                className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 bg-black/40 rounded-2xl p-6 shadow-xl border border-white/10"
               >
                 {filteredProjects.map((p, idx) => (
                   <motion.div

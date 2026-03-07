@@ -38,9 +38,9 @@ const ParticleBackground: React.FC = () => {
             width: particle.size,
             height: particle.size,
             background: `radial-gradient(circle, 
-              rgba(168, 85, 247, ${0.6 + Math.random() * 0.4}) 0%, 
-              rgba(236, 72, 153, ${0.4 + Math.random() * 0.3}) 50%, 
-              rgba(59, 130, 246, ${0.2 + Math.random() * 0.2}) 100%)`
+              rgba(255, 255, 255, ${0.4 + Math.random() * 0.3}) 0%, 
+              rgba(200, 200, 200, ${0.2 + Math.random() * 0.2}) 50%, 
+              rgba(100, 100, 100, ${0.1 + Math.random() * 0.1}) 100%)`
           }}
           animate={{
             y: [0, -40 - Math.random() * 20, 0],
@@ -69,8 +69,8 @@ const ParticleBackground: React.FC = () => {
             height: particle.size * 3,
             background: `radial-gradient(circle, 
               transparent 0%, 
-              rgba(168, 85, 247, 0.1) 30%, 
-              rgba(236, 72, 153, 0.05) 60%, 
+              rgba(200, 200, 200, 0.06) 30%, 
+              rgba(150, 150, 150, 0.03) 60%, 
               transparent 100%)`
           }}
           animate={{

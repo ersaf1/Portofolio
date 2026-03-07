@@ -71,7 +71,7 @@ const GitHubRepos: React.FC = () => {
           href="https://github.com/ersaf1" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="text-teal-500 font-medium hover:underline"
+          className="text-gray-300 font-medium hover:underline"
         >
           View GitHub Profile
         </a>
@@ -105,7 +105,7 @@ const GitHubRepos: React.FC = () => {
             </div>
           </div>
           
-          <h3 className="text-lg font-bold mb-2 group-hover:text-teal-500 transition-colors">
+          <h3 className="text-lg font-bold mb-2 group-hover:text-white transition-colors">
             {repo.name}
           </h3>
           
@@ -115,7 +115,7 @@ const GitHubRepos: React.FC = () => {
 
           <div className="flex flex-wrap gap-2 mt-auto">
             {repo.language && (
-              <span className="px-2 py-1 text-xs bg-teal-500/10 text-teal-600 rounded-md">
+              <span className="px-2 py-1 text-xs bg-white/10 text-gray-300 rounded-md">
                 {repo.language}
               </span>
             )}

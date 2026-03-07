@@ -15,10 +15,10 @@ const HeroPortrait: React.FC<{ size?: number; className?: string }> = ({ size = 
       style={{ width: size, height: size }}
     >
       {/* Glow */}
-      <div className="absolute -inset-6 rounded-[40%] bg-gradient-to-tr from-teal-500/30 via-cyan-500/20 to-emerald-500/30 blur-2xl" />
+      <div className="absolute -inset-6 rounded-[40%] bg-gradient-to-tr from-white/10 via-gray-400/10 to-white/5 blur-2xl" />
       
       {/* Container for image/blob */}
-      <div className="relative z-10 w-full h-full rounded-[40%] bg-gradient-to-br from-teal-500 via-cyan-500 to-emerald-500 overflow-hidden flex items-center justify-center">
+      <div className="relative z-10 w-full h-full rounded-[40%] bg-gradient-to-br from-gray-700 via-gray-600 to-gray-800 overflow-hidden flex items-center justify-center">
         {!imgError ? (
           <img 
             src={profileSrc} 

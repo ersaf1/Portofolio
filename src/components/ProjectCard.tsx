@@ -24,7 +24,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
         {/* Project Image Placeholder */}
         <motion.div 
           className={`w-full aspect-square rounded-xl mb-4 flex items-center justify-center overflow-hidden relative ${
-            project.image ? 'bg-slate-100 dark:bg-slate-800' : 'bg-gradient-to-br from-purple-500/20 to-pink-500/20'
+            project.image ? 'bg-slate-800' : 'bg-gradient-to-br from-gray-700/20 to-gray-600/20'
           }`}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
@@ -38,7 +38,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
           ) : (
             <>
               <motion.div 
-                className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-pink-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className="absolute inset-0 bg-gradient-to-br from-gray-600/30 to-gray-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               />
               <motion.div 
                 className="text-6xl opacity-50 relative z-10"
@@ -84,7 +84,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
               <Tooltip.Trigger asChild>
                 <motion.span
                   whileHover={{ scale: 1.05 }}
-                  className="px-3 py-1 text-xs bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg cursor-default"
+                  className="px-3 py-1 text-xs bg-white/10 border border-white/10 rounded-lg cursor-default"
                 >
                   {tech}
                 </motion.span>
@@ -154,7 +154,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
           </div>
           <Link
             to={`/projects/${project.id}`}
-            className="flex items-center gap-1 text-sm font-medium text-purple-600 dark:text-purple-400 group-hover:gap-2 transition-all"
+            className="flex items-center gap-1 text-sm font-medium text-gray-300 group-hover:gap-2 transition-all"
           >
             Details
             <ArrowRight className="w-4 h-4" />

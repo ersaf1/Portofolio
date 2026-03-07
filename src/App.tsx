@@ -8,7 +8,7 @@ import Gallery from './pages/Gallery'
 import FunFacts from './pages/FunFacts'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import ParticleBackground from './components/ParticleBackground'
+import LightPillar from './components/LightPillar'
 import { LanguageProvider } from './context/LanguageContext'
 
 const App: React.FC = () => {
@@ -17,7 +17,23 @@ const App: React.FC = () => {
   return (
     <LanguageProvider>
       <div className="min-h-screen flex flex-col relative">
-        <ParticleBackground />
+        {/* Global LightPillar background — fixed, behind everything */}
+        <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
+          <LightPillar
+            topColor="#000000"
+            bottomColor="#ffffff"
+            intensity={1}
+            rotationSpeed={1.4}
+            glowAmount={0.003}
+            pillarWidth={3.5}
+            pillarHeight={0.4}
+            noiseIntensity={0}
+            pillarRotation={225}
+            interactive={false}
+            mixBlendMode="screen"
+            quality="low"
+          />
+        </div>
         <Navbar />
         <AnimatePresence mode="wait">
           <motion.main

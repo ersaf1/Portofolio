@@ -21,7 +21,7 @@ const ProjectDetail: React.FC = () => {
         </p>
         <Link
           to="/projects"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-700 to-gray-500 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
         >
           <ArrowLeft className="w-5 h-5" />
           Back to Projects
@@ -40,7 +40,7 @@ const ProjectDetail: React.FC = () => {
       {/* Back Button */}
       <Link
         to="/projects"
-        className="inline-flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-teal-500 transition-colors"
+        className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
         Back to Projects
@@ -106,7 +106,7 @@ const ProjectDetail: React.FC = () => {
               href={project.demo}
               target="_blank"
               rel="noreferrer"
-              className="px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-xl font-semibold hover:shadow-lg transition-all flex items-center gap-2"
+              className="px-6 py-3 bg-gradient-to-r from-gray-700 to-gray-500 text-white rounded-xl font-semibold hover:shadow-lg transition-all flex items-center gap-2"
             >
               <ExternalLink className="w-5 h-5" />
               Live Demo
@@ -140,7 +140,7 @@ const ProjectDetail: React.FC = () => {
           {project.tech.map((tech, idx) => (
             <span
               key={idx}
-              className="px-4 py-2 bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 rounded-xl font-medium"
+              className="px-4 py-2 bg-white/10 border border-white/10 rounded-xl font-medium"
             >
               {tech}
             </span>
@@ -156,7 +156,7 @@ const ProjectDetail: React.FC = () => {
         className="glass rounded-3xl p-8"
       >
         <div className={`w-full rounded-2xl flex items-center justify-center overflow-hidden min-h-[300px] ${
-          project.image ? 'bg-slate-100 dark:bg-slate-800' : 'bg-gradient-to-br from-teal-500/20 to-cyan-500/20'
+          project.image ? 'bg-slate-800' : 'bg-gradient-to-br from-gray-700/20 to-gray-600/20'
         }`}>
           {project.image ? (
             <img 

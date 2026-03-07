@@ -46,7 +46,7 @@ const Contact: React.FC = () => {
         >
           <div className="glass rounded-2xl p-8">
             <div className="flex items-center gap-3 mb-6">
-              <MessageSquare className="w-6 h-6 text-teal-500" />
+              <MessageSquare className="w-6 h-6 text-gray-400" />
               <h2 className="text-2xl font-bold">{t('contact.info.title')}</h2>
             </div>
             <p className="text-slate-600 dark:text-slate-400 mb-6">
@@ -58,7 +58,7 @@ const Contact: React.FC = () => {
                 href="mailto:ersafrexx@gmail.com"
                 className="flex items-center gap-3 p-4 glass rounded-xl hover:shadow-lg transition-all group"
               >
-                <Mail className="w-5 h-5 text-teal-500 group-hover:scale-110 transition-transform" />
+                <Mail className="w-5 h-5 text-gray-400 group-hover:scale-110 transition-transform" />
                 <div>
                   <div className="text-sm text-slate-500 dark:text-slate-400">Email</div>
                   <div className="font-medium">ersafrexx@gmail.com</div>
@@ -83,7 +83,7 @@ const Contact: React.FC = () => {
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 p-4 glass rounded-xl hover:shadow-lg transition-all group"
                   >
-                    <div className="text-teal-500 group-hover:scale-110 transition-transform">
+                    <div className="text-gray-400 group-hover:scale-110 transition-transform">
                       {social.icon}
                     </div>
                     <div>
@@ -109,7 +109,7 @@ const Contact: React.FC = () => {
               animate={{ opacity: 1, scale: 1 }}
               className="glass rounded-2xl p-12 text-center h-full flex flex-col items-center justify-center"
             >
-              <CheckCircle className="w-16 h-16 text-green-500 mb-4" />
+              <CheckCircle className="w-16 h-16 text-white mb-4" />
               <h3 className="text-2xl font-bold mb-2">{t('contact.form.success.title')}</h3>
               <p className="text-slate-600 dark:text-slate-400 mb-6">
                 {t('contact.form.success.message')}
@@ -155,8 +155,7 @@ const Contact: React.FC = () => {
                 <input
                   name="name"
                   required
-                  className="w-full px-4 py-3 glass rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
-                  placeholder={t('contact.form.name.placeholder')}
+                  className="w-full px-4 py-3 glass rounded-xl focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
                 />
               </div>
 
@@ -166,7 +165,7 @@ const Contact: React.FC = () => {
                   type="email"
                   name="email"
                   required
-                  className="w-full px-4 py-3 glass rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
+                  className="w-full px-4 py-3 glass rounded-xl focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
                   placeholder={t('contact.form.email.placeholder')}
                 />
               </div>
@@ -177,7 +176,7 @@ const Contact: React.FC = () => {
                   name="message"
                   required
                   rows={5}
-                  className="w-full px-4 py-3 glass rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all resize-none"
+                  className="w-full px-4 py-3 glass rounded-xl focus:outline-none focus:ring-2 focus:ring-white/30 transition-all resize-none"
                   placeholder={t('contact.form.message.placeholder')}
                 />
               </div>
@@ -185,13 +184,13 @@ const Contact: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full px-6 py-4 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-xl font-semibold shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group disabled:opacity-70"
+                className="w-full px-6 py-4 bg-gradient-to-r from-gray-700 to-gray-500 text-white rounded-xl font-semibold shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group disabled:opacity-70"
               >
                 <Send className="w-5 h-5" />
                 {loading ? 'Mengirim…' : t('contact.form.submit')}
               </button>
               {error && (
-                <p className="text-red-500 text-sm mt-2">{error}</p>
+                <p className="text-gray-400 text-sm mt-2">{error}</p>
               )}
             </form>
           )}
