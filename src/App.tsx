@@ -32,6 +32,7 @@ const PageTransition: React.FC<{ children: React.ReactNode; pathname: string }> 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' })
     if (isFirst.current) {
       isFirst.current = false
       setDisplayChildren(children)

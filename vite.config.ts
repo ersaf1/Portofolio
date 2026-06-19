@@ -22,6 +22,8 @@ export default defineConfig({
           'vendor-emailjs': ['@emailjs/browser'],
           // Icons
           'vendor-icons': ['lucide-react'],
+          // Animation
+          'vendor-motion': ['framer-motion'],
         }
       }
     },
