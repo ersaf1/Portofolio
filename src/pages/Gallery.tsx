@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, X, Camera } from 'lucide-react';
+import ScrollReveal from '../components/ScrollReveal';
 import photo1 from '../assets/WhatsApp Image 2025-10-10 at 10.12.54.jpeg';
 import photo2 from '../assets/WhatsApp Image 2025-10-10 at 10.12.56.jpeg';
 import photo3 from '../assets/WhatsApp Image 2025-10-10 at 10.13.04 (1).jpeg';
@@ -45,101 +46,104 @@ const Gallery: React.FC = () => {
     <div className="py-8 space-y-8">
 
       {/* ── HEADER ───────────────────────────────────── */}
-      <div className="relative overflow-hidden profile-card p-7 md:p-10 animate-fade-in-up">
-        <div className="action-lines opacity-20" />
-        <span className="onomatopoeia-pow absolute top-4 right-6 text-5xl z-10">SNAP!</span>
-        <div className="relative z-10 flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-3 mb-3">
-              <div className="icon-box icon-box-red"><Camera className="w-4 h-4" /></div>
-              <span className="section-label">Galeri Foto</span>
-              <span className="badge-comic badge-comic-black">{photos.length}</span>
+      <ScrollReveal>
+        <div className="relative overflow-hidden profile-card p-7 md:p-10">
+          <div className="action-lines opacity-20" />
+          <span className="onomatopoeia-pow absolute top-4 right-6 text-5xl z-10">SNAP!</span>
+          <div className="relative z-10 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="icon-box icon-box-red"><Camera className="w-4 h-4" /></div>
+                <span className="section-label">Galeri Foto</span>
+                <span className="badge-comic badge-comic-black">{photos.length}</span>
+              </div>
+              <h1
+                className="font-bangers text-comic-black tracking-tight leading-[0.85]"
+                style={{ fontSize: 'clamp(3.5rem, 9vw, 7.5rem)' }}
+              >
+                MY{' '}
+                <span className="text-comic-red" style={{ WebkitTextStroke: '3px #111' }}>
+                  PHOTOS
+                </span>
+              </h1>
             </div>
-            <h1
-              className="font-bangers text-comic-black tracking-tight leading-[0.85]"
-              style={{ fontSize: 'clamp(3.5rem, 9vw, 7.5rem)' }}
-            >
-              MY{' '}
-              <span className="text-comic-red" style={{ WebkitTextStroke: '3px #111' }}>
-                PHOTOS
-              </span>
-            </h1>
+            <div className="flex flex-col items-end gap-1">
+              <div className="font-bangers text-xs uppercase tracking-widest text-comic-black opacity-40">born</div>
+              <div className="font-bangers text-4xl text-comic-black leading-none">23 <span className="text-comic-red">DES</span></div>
+              <div className="font-bangers text-xl text-comic-black opacity-60">2008</div>
+            </div>
           </div>
-          <div className="flex flex-col items-end gap-1">
-            <div className="font-bangers text-xs uppercase tracking-widest text-comic-black opacity-40">born</div>
-            <div className="font-bangers text-4xl text-comic-black leading-none">23 <span className="text-comic-red">DES</span></div>
-            <div className="font-bangers text-xl text-comic-black opacity-60">2008</div>
-          </div>
+          <div className="mt-6 h-1.5 bg-comic-black" />
+          <div className="mt-1 h-0.5 bg-comic-red" />
         </div>
-        <div className="mt-6 h-1.5 bg-comic-black" />
-        <div className="mt-1 h-0.5 bg-comic-red" />
-      </div>
+      </ScrollReveal>
 
       {/* ── GRID ─────────────────────────────────────── */}
-      <div
-        className="grid grid-cols-2 md:grid-cols-3 gap-3 animate-fade-in"
-        style={{ animationDelay: '150ms' }}
-      >
-        {photos.map((photo, i) => (
-          <button
-            key={i}
-            className="relative overflow-hidden group focus:outline-none transition-all duration-200 hover:-translate-y-1"
-            style={{
-              border: '3px solid #111',
-              boxShadow: '5px 5px 0 #111',
-              aspectRatio: '4/3',
-            }}
-            onClick={() => { setDir(1); setActive(i); }}
-            aria-label={`Open photo: ${photo.caption}`}
-          >
-            <img
-              src={photo.src}
-              alt={photo.caption}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              loading="lazy"
-            />
-
-            {/* Dark overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-            {/* Number badge */}
-            <div
-              className="absolute top-2 left-2 font-bangers text-xs leading-none px-2 py-0.5"
-              style={{ background: '#FFD700', color: '#111', border: '2px solid #111' }}
-            >
-              {String(i + 1).padStart(2, '0')}
-            </div>
-
-          </button>
-        ))}
-      </div>
-
-      {/* ── BOTTOM STRIP ────────────────────────────── */}
-      <div
-        className="flex flex-wrap items-center justify-between gap-4 animate-fade-in-up"
-        style={{ borderTop: '3px solid #111', paddingTop: '1rem' }}
-      >
-        <p className="font-bangers text-xs uppercase tracking-widest text-comic-black opacity-40">
-          Klik foto untuk membuka &bull; Arrow keys untuk navigasi
-        </p>
-        <div className="flex gap-1.5">
+      <ScrollReveal animation="animate-fade-in" delay={150}>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {photos.map((photo, i) => (
             <button
               key={i}
-              onClick={() => { setDir(1); setActive(i); }}
-              className="w-8 h-8 overflow-hidden transition-all hover:scale-110 hover:-translate-y-0.5"
+              className="relative overflow-hidden group focus:outline-none transition-all duration-200 hover:-translate-y-1"
               style={{
-                border: '2px solid #111',
-                boxShadow: '2px 2px 0 #111',
-                opacity: 0.6,
+                border: '3px solid #111',
+                boxShadow: '5px 5px 0 #111',
+                aspectRatio: '4/3',
               }}
-              aria-label={`Jump to photo ${i + 1}`}
+              onClick={() => { setDir(1); setActive(i); }}
+              aria-label={`Open photo: ${photo.caption}`}
             >
-              <img src={photo.src} alt="" className="w-full h-full object-cover" />
+              <img
+                src={photo.src}
+                alt={photo.caption}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+
+              {/* Dark overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+              {/* Number badge */}
+              <div
+                className="absolute top-2 left-2 font-bangers text-xs leading-none px-2 py-0.5"
+                style={{ background: '#FFD700', color: '#111', border: '2px solid #111' }}
+              >
+                {String(i + 1).padStart(2, '0')}
+              </div>
+
             </button>
           ))}
         </div>
-      </div>
+      </ScrollReveal>
+
+      {/* ── BOTTOM STRIP ────────────────────────────── */}
+      <ScrollReveal animation="animate-fade-in-up">
+        <div
+          className="flex flex-wrap items-center justify-between gap-4"
+          style={{ borderTop: '3px solid #111', paddingTop: '1rem' }}
+        >
+          <p className="font-bangers text-xs uppercase tracking-widest text-comic-black opacity-40">
+            Klik foto untuk membuka &bull; Arrow keys untuk navigasi
+          </p>
+          <div className="flex gap-1.5">
+            {photos.map((photo, i) => (
+              <button
+                key={i}
+                onClick={() => { setDir(1); setActive(i); }}
+                className="w-8 h-8 overflow-hidden transition-all hover:scale-110 hover:-translate-y-0.5"
+                style={{
+                  border: '2px solid #111',
+                  boxShadow: '2px 2px 0 #111',
+                  opacity: 0.6,
+                }}
+                aria-label={`Jump to photo ${i + 1}`}
+              >
+                <img src={photo.src} alt="" className="w-full h-full object-cover" />
+              </button>
+            ))}
+          </div>
+        </div>
+      </ScrollReveal>
 
       {/* ── LIGHTBOX ─────────────────────────────────── */}
       {active !== null && (

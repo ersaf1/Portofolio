@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Github, Star, GitFork, ExternalLink, RefreshCw, Clock, ArrowUpRight } from 'lucide-react'
+import ScrollReveal from '../components/ScrollReveal'
 
 const GITHUB_USERNAME = 'ersaf1'
 const CACHE_KEY = 'gh_repos_cache'
@@ -84,46 +85,48 @@ const Projects: React.FC = () => {
     <div className="space-y-8 py-8">
 
       {/* HEADER CARD */}
-      <section className="profile-card p-7 md:p-10 relative overflow-hidden">
-        <div className="action-lines opacity-20" />
-        <div className="relative z-10 flex flex-wrap items-end justify-between gap-6 animate-fade-in-up" style={{ animationDelay: '0ms' }}>
-          <div>
-            <span className="section-label">Open source</span>
-            <h1 className="mt-4 font-bangers text-[clamp(2.8rem,6vw,5rem)] text-comic-black tracking-tight leading-[0.9]">
-              Projects & repositories with craft and ongoing iteration.
-            </h1>
-          </div>
-          <div className="flex flex-wrap items-center gap-3">
-            <a href={`https://github.com/${GITHUB_USERNAME}`} target="_blank" rel="noopener noreferrer"
-              className="btn-comic bg-comic-black text-white px-4 py-2 text-sm">
-              <Github className="h-4 w-4" /> @{GITHUB_USERNAME}
-            </a>
-            {fromCache && <span className="badge-comic badge-comic-black text-xs">cached</span>}
-            <button onClick={() => fetchRepos(true)}
-              className="btn-comic bg-comic-white text-comic-black px-4 py-2 text-sm">
-              <RefreshCw className="h-4 w-4" /> Refresh
-            </button>
-          </div>
-        </div>
-
-        {!loading && !error && (
-          <div className="relative z-10 mt-8 flex flex-wrap gap-2 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
-            {languages.map(lang => (
-              <button key={lang} onClick={() => setFilter(lang)}
-                className="btn-comic text-xs px-4 py-2"
-                style={{
-                  background: filter === lang ? '#E8192C' : '#fff',
-                  color: filter === lang ? '#fff' : '#111',
-                }}>
-                {lang === 'all' ? 'all' : lang.toLowerCase()}
-                <span className="ml-1.5 opacity-50 font-mono">
-                  {lang === 'all' ? repos.length : repos.filter(r => r.language === lang).length}
-                </span>
+      <ScrollReveal>
+        <section className="profile-card p-7 md:p-10 relative overflow-hidden">
+          <div className="action-lines opacity-20" />
+          <div className="relative z-10 flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <span className="section-label">Open source</span>
+              <h1 className="mt-4 font-bangers text-[clamp(2.8rem,6vw,5rem)] text-comic-black tracking-tight leading-[0.9]">
+                Projects & repositories with craft and ongoing iteration.
+              </h1>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <a href={`https://github.com/${GITHUB_USERNAME}`} target="_blank" rel="noopener noreferrer"
+                className="btn-comic bg-comic-black text-white px-4 py-2 text-sm">
+                <Github className="h-4 w-4" /> @{GITHUB_USERNAME}
+              </a>
+              {fromCache && <span className="badge-comic badge-comic-black text-xs">cached</span>}
+              <button onClick={() => fetchRepos(true)}
+                className="btn-comic bg-comic-white text-comic-black px-4 py-2 text-sm">
+                <RefreshCw className="h-4 w-4" /> Refresh
               </button>
-            ))}
+            </div>
           </div>
-        )}
-      </section>
+
+          {!loading && !error && (
+            <div className="relative z-10 mt-8 flex flex-wrap gap-2">
+              {languages.map(lang => (
+                <button key={lang} onClick={() => setFilter(lang)}
+                  className="btn-comic text-xs px-4 py-2"
+                  style={{
+                    background: filter === lang ? '#E8192C' : '#fff',
+                    color: filter === lang ? '#fff' : '#111',
+                  }}>
+                  {lang === 'all' ? 'all' : lang.toLowerCase()}
+                  <span className="ml-1.5 opacity-50 font-mono">
+                    {lang === 'all' ? repos.length : repos.filter(r => r.language === lang).length}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
+        </section>
+      </ScrollReveal>
 
       {/* LOADING SKELETON */}
       {loading && (
@@ -146,14 +149,16 @@ const Projects: React.FC = () => {
 
       {/* ERROR */}
       {error && (
-        <div className="card-comic p-12 text-center bg-comic-cream animate-fade-in-up" style={{ animationDelay: '0ms' }}>
-          <Github className="mx-auto h-12 w-12 text-comic-black opacity-20 mb-4" />
-          <p className="text-sm font-mono text-comic-black mb-6">{error}</p>
-          <button onClick={() => fetchRepos(true)}
-            className="btn-comic bg-comic-yellow text-comic-black px-5 py-3">
-            <RefreshCw className="h-4 w-4" /> Retry
-          </button>
-        </div>
+        <ScrollReveal>
+          <div className="card-comic p-12 text-center bg-comic-cream">
+            <Github className="mx-auto h-12 w-12 text-comic-black opacity-20 mb-4" />
+            <p className="text-sm font-mono text-comic-black mb-6">{error}</p>
+            <button onClick={() => fetchRepos(true)}
+              className="btn-comic bg-comic-yellow text-comic-black px-5 py-3">
+              <RefreshCw className="h-4 w-4" /> Retry
+            </button>
+          </div>
+        </ScrollReveal>
       )}
 
       {/* REPO CARDS */}
@@ -164,72 +169,74 @@ const Projects: React.FC = () => {
               <p className="text-sm font-mono text-comic-black">No repos in this language.</p>
             </div>
           ) : filtered.map((repo, i) => (
-            <article key={repo.id}
-              className={`card-comic ${LANG_ACCENT[i % LANG_ACCENT.length]} p-6 flex flex-col min-h-[300px] group hover:-translate-y-1 transition-transform duration-200`}
-            >
-              {/* Card header */}
-              <div className="flex items-start justify-between gap-3 mb-5">
-                <div className="icon-box icon-box-red">
-                  <Github className="h-4 w-4" />
-                </div>
-                <div className="flex gap-3 font-mono text-xs text-comic-black">
-                  <span className="flex items-center gap-1">
-                    <Star className="h-3 w-3" />{repo.stargazers_count}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <GitFork className="h-3 w-3" />{repo.forks_count}
-                  </span>
-                </div>
-              </div>
-
-              {/* Title */}
-              <div className="flex-1">
-                <div className="flex items-center gap-1 font-bangers text-xs uppercase tracking-wider text-comic-black mb-2">
-                  repo <ArrowUpRight className="h-3 w-3" />
-                </div>
-                <h3 className="font-bangers text-[1.7rem] leading-none text-comic-black group-hover:text-comic-red transition-colors tracking-tight">
-                  {repo.name}
-                </h3>
-                <p className="mt-3 text-sm leading-7 text-comic-black font-comic opacity-80">
-                  {repo.description || 'No description.'}
-                </p>
-              </div>
-
-              {/* Tags */}
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                {repo.language && (
-                  <span className="tag-comic">
-                    <span className="w-2 h-2 rounded-full inline-block"
-                      style={{ background: LANG_COLOR[repo.language] ?? '#888' }} />
-                    {repo.language}
-                  </span>
-                )}
-                {repo.topics?.slice(0, 3).map(t => (
-                  <span key={t} className="tag-comic">{t}</span>
-                ))}
-              </div>
-
-              {/* Footer — hover reveal */}
-              <div className="mt-5 pt-4 border-t-4 border-comic-black opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex gap-2">
-                    <a href={repo.html_url} target="_blank" rel="noopener noreferrer"
-                      className="btn-comic bg-comic-yellow text-comic-black px-3 py-1.5 text-xs">
-                      <Github className="h-3.5 w-3.5" /> Code
-                    </a>
-                    {repo.homepage && (
-                      <a href={repo.homepage} target="_blank" rel="noopener noreferrer"
-                        className="btn-comic bg-comic-red text-white px-3 py-1.5 text-xs">
-                        <ExternalLink className="h-3.5 w-3.5" /> Demo
-                      </a>
-                    )}
+            <ScrollReveal key={repo.id} delay={i * 80}>
+              <article
+                className={`card-comic ${LANG_ACCENT[i % LANG_ACCENT.length]} p-6 flex flex-col min-h-[300px] group hover:-translate-y-1 transition-transform duration-200`}
+              >
+                {/* Card header */}
+                <div className="flex items-start justify-between gap-3 mb-5">
+                  <div className="icon-box icon-box-red">
+                    <Github className="h-4 w-4" />
                   </div>
-                  <span className="font-mono text-xs text-comic-black opacity-50">
-                    <Clock className="inline h-3 w-3 mr-1" />{timeAgo(repo.updated_at)}
-                  </span>
+                  <div className="flex gap-3 font-mono text-xs text-comic-black">
+                    <span className="flex items-center gap-1">
+                      <Star className="h-3 w-3" />{repo.stargazers_count}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <GitFork className="h-3 w-3" />{repo.forks_count}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </article>
+
+                {/* Title */}
+                <div className="flex-1">
+                  <div className="flex items-center gap-1 font-bangers text-xs uppercase tracking-wider text-comic-black mb-2">
+                    repo <ArrowUpRight className="h-3 w-3" />
+                  </div>
+                  <h3 className="font-bangers text-[1.7rem] leading-none text-comic-black group-hover:text-comic-red transition-colors tracking-tight">
+                    {repo.name}
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-comic-black font-comic opacity-80">
+                    {repo.description || 'No description.'}
+                  </p>
+                </div>
+
+                {/* Tags */}
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {repo.language && (
+                    <span className="tag-comic">
+                      <span className="w-2 h-2 rounded-full inline-block"
+                        style={{ background: LANG_COLOR[repo.language] ?? '#888' }} />
+                      {repo.language}
+                    </span>
+                  )}
+                  {repo.topics?.slice(0, 3).map(t => (
+                    <span key={t} className="tag-comic">{t}</span>
+                  ))}
+                </div>
+
+                {/* Footer — hover reveal */}
+                <div className="mt-5 pt-4 border-t-4 border-comic-black opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex gap-2">
+                      <a href={repo.html_url} target="_blank" rel="noopener noreferrer"
+                        className="btn-comic bg-comic-yellow text-comic-black px-3 py-1.5 text-xs">
+                        <Github className="h-3.5 w-3.5" /> Code
+                      </a>
+                      {repo.homepage && (
+                        <a href={repo.homepage} target="_blank" rel="noopener noreferrer"
+                          className="btn-comic bg-comic-red text-white px-3 py-1.5 text-xs">
+                          <ExternalLink className="h-3.5 w-3.5" /> Demo
+                        </a>
+                      )}
+                    </div>
+                    <span className="font-mono text-xs text-comic-black opacity-50">
+                      <Clock className="inline h-3 w-3 mr-1" />{timeAgo(repo.updated_at)}
+                    </span>
+                  </div>
+                </div>
+              </article>
+            </ScrollReveal>
           ))}
         </div>
       )}
