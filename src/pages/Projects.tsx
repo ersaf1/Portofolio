@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Github, Star, GitFork, ExternalLink, RefreshCw } from 'lucide-react'
+import { Github, Star, GitFork, ExternalLink, RefreshCw, Clock, ArrowUpRight } from 'lucide-react'
 
 const GITHUB_USERNAME = 'ersaf1'
+const CACHE_KEY = 'gh_repos_cache'
+const CACHE_TTL = 1000 * 60 * 10
 
 interface GitHubRepo {
   id: number
@@ -18,252 +19,222 @@ interface GitHubRepo {
   fork: boolean
 }
 
+interface CacheEntry { data: GitHubRepo[]; timestamp: number }
+
+function getCached(): GitHubRepo[] | null {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY)
+    if (!raw) return null
+    const entry: CacheEntry = JSON.parse(raw)
+    if (Date.now() - entry.timestamp > CACHE_TTL) return null
+    return entry.data
+  } catch { return null }
+}
+function setCache(data: GitHubRepo[]) {
+  try { localStorage.setItem(CACHE_KEY, JSON.stringify({ data, timestamp: Date.now() })) } catch {}
+}
+function timeAgo(dateStr: string): string {
+  const days = Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000)
+  if (days === 0) return 'today'
+  if (days === 1) return '1d ago'
+  if (days < 30) return `${days}d ago`
+  const months = Math.floor(days / 30)
+  if (months < 12) return `${months}mo ago`
+  return `${Math.floor(months / 12)}y ago`
+}
+
+const LANG_COLOR: Record<string, string> = {
+  TypeScript: '#3b82f6', JavaScript: '#facc15', Python: '#22c55e',
+  HTML: '#f97316', CSS: '#d8b57d', Vue: '#10b981', Go: '#06b6d4',
+}
+const LANG_ACCENT: string[] = ['card-comic-red', 'card-comic-yellow', 'card-comic-black', 'card-comic-red', 'card-comic-yellow', 'card-comic-black']
+
 const Projects: React.FC = () => {
   const [repos, setRepos] = useState<GitHubRepo[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [activeFilter, setActiveFilter] = useState('all')
+  const [filter, setFilter] = useState('all')
+  const [fromCache, setFromCache] = useState(false)
 
-  const fetchRepos = async () => {
-    setLoading(true)
-    setError('')
-    try {
-      const response = await fetch(
-        `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=30`
-      )
-      if (!response.ok) throw new Error(`GitHub API error: ${response.status}`)
-      const data: GitHubRepo[] = await response.json()
-      // exclude forks and portfolio repo
-      setRepos(data.filter(r => !r.fork && !r.name.toLowerCase().includes('porto')))
-    } catch (err) {
-      setError('Gagal memuat repositories. Cek koneksi internet kamu.')
-    } finally {
-      setLoading(false)
+  const fetchRepos = async (force = false) => {
+    setLoading(true); setError(''); setFromCache(false)
+    if (!force) {
+      const cached = getCached()
+      if (cached) {
+        setRepos(cached.filter(r => !r.fork && !r.name.toLowerCase().includes('porto')))
+        setFromCache(true); setLoading(false); return
+      }
     }
+    try {
+      const res = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=30`)
+      if (!res.ok) throw new Error(`${res.status}`)
+      const data: GitHubRepo[] = await res.json()
+      setCache(data)
+      setRepos(data.filter(r => !r.fork && !r.name.toLowerCase().includes('porto')))
+    } catch { setError('Gagal memuat repositories.') }
+    finally { setLoading(false) }
   }
 
-  useEffect(() => {
-    fetchRepos()
-  }, [])
+  useEffect(() => { fetchRepos() }, [])
 
-  // Build filter list from unique languages
   const languages = ['all', ...Array.from(new Set(repos.map(r => r.language).filter(Boolean) as string[]))]
-
-  const filtered = activeFilter === 'all'
-    ? repos
-    : repos.filter(r => r.language === activeFilter)
+  const filtered = filter === 'all' ? repos : repos.filter(r => r.language === filter)
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col justify-center items-center overflow-x-hidden">
-      <div className="absolute inset-0 -z-10 bg-black/60 backdrop-blur-xl" />
-      <div className="mx-auto max-w-6xl w-full space-y-12 py-16 px-4">
+    <div className="space-y-8 py-8">
 
-        {/* Header */}
-        <motion.section
-          initial={{ opacity: 0, y: 30, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.8, type: 'spring', stiffness: 100 }}
-          className="text-center"
-        >
-          <motion.h1
-            className="text-4xl md:text-5xl font-bold mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-          >
-            My{' '}
-            <motion.span
-              className="bg-gradient-to-r from-gray-200 via-white to-gray-300 bg-clip-text text-transparent"
-              animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
-              transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-              style={{ backgroundSize: '200% 200%' }}
-            >
-              Projects
-            </motion.span>
-          </motion.h1>
-          <motion.p
-            className="text-lg text-slate-400 max-w-2xl mx-auto flex items-center justify-center gap-2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-          >
-            <Github className="w-5 h-5" />
-            Diambil langsung dari GitHub
-            <a
-              href={`https://github.com/${GITHUB_USERNAME}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white font-semibold hover:underline"
-            >
-              @{GITHUB_USERNAME}
+      {/* HEADER CARD */}
+      <section className="profile-card p-7 md:p-10 relative overflow-hidden">
+        <div className="action-lines opacity-20" />
+        <div className="relative z-10 flex flex-wrap items-end justify-between gap-6 animate-fade-in-up" style={{ animationDelay: '0ms' }}>
+          <div>
+            <span className="section-label">Open source</span>
+            <h1 className="mt-4 font-bangers text-[clamp(2.8rem,6vw,5rem)] text-comic-black tracking-tight leading-[0.9]">
+              Projects & repositories with craft and ongoing iteration.
+            </h1>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <a href={`https://github.com/${GITHUB_USERNAME}`} target="_blank" rel="noopener noreferrer"
+              className="btn-comic bg-comic-black text-white px-4 py-2 text-sm">
+              <Github className="h-4 w-4" /> @{GITHUB_USERNAME}
             </a>
-          </motion.p>
-        </motion.section>
+            {fromCache && <span className="badge-comic badge-comic-black text-xs">cached</span>}
+            <button onClick={() => fetchRepos(true)}
+              className="btn-comic bg-comic-white text-comic-black px-4 py-2 text-sm">
+              <RefreshCw className="h-4 w-4" /> Refresh
+            </button>
+          </div>
+        </div>
 
-        {/* Filter Buttons */}
         {!loading && !error && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-wrap gap-2 justify-center"
-          >
+          <div className="relative z-10 mt-8 flex flex-wrap gap-2 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
             {languages.map(lang => (
-              <motion.button
-                key={lang}
-                onClick={() => setActiveFilter(lang)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`px-5 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
-                  activeFilter === lang
-                    ? 'bg-gradient-to-r from-gray-600 to-gray-400 text-white shadow-lg'
-                    : 'glass hover:bg-white/10'
-                }`}
-              >
-                {lang === 'all' ? 'All' : lang}
-                <span className="ml-1.5 text-xs opacity-60">
-                  ({lang === 'all' ? repos.length : repos.filter(r => r.language === lang).length})
+              <button key={lang} onClick={() => setFilter(lang)}
+                className="btn-comic text-xs px-4 py-2"
+                style={{
+                  background: filter === lang ? '#E8192C' : '#fff',
+                  color: filter === lang ? '#fff' : '#111',
+                }}>
+                {lang === 'all' ? 'all' : lang.toLowerCase()}
+                <span className="ml-1.5 opacity-50 font-mono">
+                  {lang === 'all' ? repos.length : repos.filter(r => r.language === lang).length}
                 </span>
-              </motion.button>
-            ))}
-          </motion.div>
-        )}
-
-        {/* Loading Skeleton */}
-        {loading && (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="glass p-6 rounded-2xl h-52 animate-pulse flex flex-col gap-3">
-                <div className="flex justify-between">
-                  <div className="w-8 h-8 bg-white/10 rounded-full" />
-                  <div className="w-16 h-4 bg-white/10 rounded" />
-                </div>
-                <div className="w-3/4 h-5 bg-white/10 rounded" />
-                <div className="w-full h-4 bg-white/10 rounded" />
-                <div className="w-2/3 h-4 bg-white/10 rounded" />
-                <div className="flex gap-2 mt-auto">
-                  <div className="w-16 h-5 bg-white/10 rounded" />
-                  <div className="w-16 h-5 bg-white/10 rounded" />
-                </div>
-              </div>
+              </button>
             ))}
           </div>
         )}
+      </section>
 
-        {/* Error State */}
-        {error && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-16 flex flex-col items-center gap-4"
-          >
-            <Github className="w-14 h-14 text-slate-500" />
-            <p className="text-slate-400">{error}</p>
-            <button
-              onClick={fetchRepos}
-              className="flex items-center gap-2 px-5 py-2 rounded-xl glass hover:bg-white/10 transition-all"
-            >
-              <RefreshCw className="w-4 h-4" /> Coba Lagi
-            </button>
-          </motion.div>
-        )}
+      {/* LOADING SKELETON */}
+      {loading && (
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="card-comic h-72 animate-pulse p-6 bg-comic-cream">
+              <div className="flex justify-between mb-4">
+                <div className="w-11 h-11 bg-comic-yellow comic-border" />
+                <div className="w-16 h-5 bg-comic-yellow comic-border" />
+              </div>
+              <div className="h-6 w-2/3 bg-comic-yellow comic-border mb-3" />
+              <div className="space-y-2">
+                <div className="h-3 w-full bg-comic-yellow comic-border" />
+                <div className="h-3 w-4/5 bg-comic-yellow comic-border" />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
-        {/* Repo Grid */}
-        {!loading && !error && (
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeFilter}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.3 }}
-              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+      {/* ERROR */}
+      {error && (
+        <div className="card-comic p-12 text-center bg-comic-cream animate-fade-in-up" style={{ animationDelay: '0ms' }}>
+          <Github className="mx-auto h-12 w-12 text-comic-black opacity-20 mb-4" />
+          <p className="text-sm font-mono text-comic-black mb-6">{error}</p>
+          <button onClick={() => fetchRepos(true)}
+            className="btn-comic bg-comic-yellow text-comic-black px-5 py-3">
+            <RefreshCw className="h-4 w-4" /> Retry
+          </button>
+        </div>
+      )}
+
+      {/* REPO CARDS */}
+      {!loading && !error && (
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {filtered.length === 0 ? (
+            <div className="card-comic col-span-full p-12 text-center bg-comic-cream">
+              <p className="text-sm font-mono text-comic-black">No repos in this language.</p>
+            </div>
+          ) : filtered.map((repo, i) => (
+            <article key={repo.id}
+              className={`card-comic ${LANG_ACCENT[i % LANG_ACCENT.length]} p-6 flex flex-col min-h-[300px] group hover:-translate-y-1 transition-transform duration-200`}
             >
-              {filtered.length === 0 ? (
-                <p className="col-span-full text-center text-slate-500 py-16">
-                  Tidak ada repo dengan bahasa ini.
+              {/* Card header */}
+              <div className="flex items-start justify-between gap-3 mb-5">
+                <div className="icon-box icon-box-red">
+                  <Github className="h-4 w-4" />
+                </div>
+                <div className="flex gap-3 font-mono text-xs text-comic-black">
+                  <span className="flex items-center gap-1">
+                    <Star className="h-3 w-3" />{repo.stargazers_count}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <GitFork className="h-3 w-3" />{repo.forks_count}
+                  </span>
+                </div>
+              </div>
+
+              {/* Title */}
+              <div className="flex-1">
+                <div className="flex items-center gap-1 font-bangers text-xs uppercase tracking-wider text-comic-black mb-2">
+                  repo <ArrowUpRight className="h-3 w-3" />
+                </div>
+                <h3 className="font-bangers text-[1.7rem] leading-none text-comic-black group-hover:text-comic-red transition-colors tracking-tight">
+                  {repo.name}
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-comic-black font-comic opacity-80">
+                  {repo.description || 'No description.'}
                 </p>
-              ) : (
-                filtered.map((repo, index) => (
-                  <motion.div
-                    key={repo.id}
-                    initial={{ opacity: 0, y: 24, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ delay: index * 0.06, type: 'spring', stiffness: 120 }}
-                    whileHover={{ y: -6, scale: 1.02 }}
-                    className="glass p-6 rounded-2xl flex flex-col h-full hover:shadow-xl transition-all group"
-                  >
-                    {/* Top row */}
-                    <div className="flex items-center justify-between mb-4">
-                      <Github className="w-5 h-5 text-slate-400 group-hover:text-white transition-colors" />
-                      <div className="flex gap-3 text-sm text-slate-500">
-                        <span className="flex items-center gap-1">
-                          <Star className="w-3.5 h-3.5" /> {repo.stargazers_count}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <GitFork className="w-3.5 h-3.5" /> {repo.forks_count}
-                        </span>
-                      </div>
-                    </div>
+              </div>
 
-                    {/* Name */}
-                    <h3 className="text-base font-bold mb-2 group-hover:text-white transition-colors">
-                      {repo.name}
-                    </h3>
+              {/* Tags */}
+              <div className="mt-4 flex flex-wrap gap-1.5">
+                {repo.language && (
+                  <span className="tag-comic">
+                    <span className="w-2 h-2 rounded-full inline-block"
+                      style={{ background: LANG_COLOR[repo.language] ?? '#888' }} />
+                    {repo.language}
+                  </span>
+                )}
+                {repo.topics?.slice(0, 3).map(t => (
+                  <span key={t} className="tag-comic">{t}</span>
+                ))}
+              </div>
 
-                    {/* Description */}
-                    {repo.description && (
-                      <p className="text-sm text-slate-400 flex-1 line-clamp-3 mb-4">
-                        {repo.description}
-                      </p>
-                    )}
-
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {repo.language && (
-                        <span className="px-2 py-0.5 text-xs bg-white/10 text-gray-300 rounded-md">
-                          {repo.language}
-                        </span>
-                      )}
-                      {repo.topics?.slice(0, 3).map(topic => (
-                        <span key={topic} className="px-2 py-0.5 text-xs bg-white/5 text-slate-400 rounded-md">
-                          {topic}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Links */}
-                    <div className="flex gap-2 mt-auto">
-                      <a
-                        href={repo.html_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1 px-3 py-1.5 text-xs rounded-lg bg-white/10 hover:bg-white/20 transition-all"
-                      >
-                        <Github className="w-3.5 h-3.5" /> Code
+              {/* Footer — hover reveal */}
+              <div className="mt-5 pt-4 border-t-4 border-comic-black opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex gap-2">
+                    <a href={repo.html_url} target="_blank" rel="noopener noreferrer"
+                      className="btn-comic bg-comic-yellow text-comic-black px-3 py-1.5 text-xs">
+                      <Github className="h-3.5 w-3.5" /> Code
+                    </a>
+                    {repo.homepage && (
+                      <a href={repo.homepage} target="_blank" rel="noopener noreferrer"
+                        className="btn-comic bg-comic-red text-white px-3 py-1.5 text-xs">
+                        <ExternalLink className="h-3.5 w-3.5" /> Demo
                       </a>
-                      {repo.homepage && (
-                        <a
-                          href={repo.homepage}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1 px-3 py-1.5 text-xs rounded-lg bg-white/10 hover:bg-white/20 transition-all"
-                        >
-                          <ExternalLink className="w-3.5 h-3.5" /> Demo
-                        </a>
-                      )}
-                    </div>
-                  </motion.div>
-                ))
-              )}
-            </motion.div>
-          </AnimatePresence>
-        )}
-
-      </div>
+                    )}
+                  </div>
+                  <span className="font-mono text-xs text-comic-black opacity-50">
+                    <Clock className="inline h-3 w-3 mr-1" />{timeAgo(repo.updated_at)}
+                  </span>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
 
 export default Projects
-

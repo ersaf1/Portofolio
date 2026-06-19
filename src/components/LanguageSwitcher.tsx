@@ -1,5 +1,4 @@
 import React from 'react'
-import { motion } from 'framer-motion'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { Globe, Check } from 'lucide-react'
 import { useLanguage, Language } from '../context/LanguageContext'
@@ -16,36 +15,34 @@ const LanguageSwitcher: React.FC = () => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="flex items-center gap-2 px-3 py-2 rounded-lg glass hover:bg-white/20 dark:hover:bg-slate-700/40 transition-all"
+        <button
+          className="flex items-center gap-2 px-3 py-2 font-bold text-sm comic-border bg-comic-yellow hover:scale-105 active:scale-95 transition-transform"
           aria-label="Select language"
         >
-          <Globe className="w-4 h-4" />
-          <span className="text-sm font-medium">
+          <Globe className="w-4 h-4 text-comic-black" />
+          <span className="text-sm font-bold text-comic-black">
             {currentLang?.flag} {currentLang?.name}
           </span>
-        </motion.button>
+        </button>
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          className="glass rounded-xl p-2 min-w-[180px] shadow-2xl z-50"
+          className="comic-panel bg-comic-cream p-2 min-w-[180px] z-50"
           sideOffset={5}
         >
           {languages.map((lang) => (
             <DropdownMenu.Item
               key={lang.code}
               onClick={() => setLanguage(lang.code)}
-              className="px-4 py-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-700/60 cursor-pointer outline-none flex items-center justify-between gap-3 transition-all"
+              className="px-4 py-2 cursor-pointer outline-none flex items-center justify-between gap-3 transition-all hover:bg-comic-yellow font-bold text-sm text-comic-black"
             >
               <div className="flex items-center gap-2">
                 <span className="text-lg">{lang.flag}</span>
-                <span className="text-sm font-medium">{lang.name}</span>
+                <span>{lang.name}</span>
               </div>
               {language === lang.code && (
-                <Check className="w-4 h-4 text-gray-300" />
+                <Check className="w-4 h-4 text-comic-red" />
               )}
             </DropdownMenu.Item>
           ))}

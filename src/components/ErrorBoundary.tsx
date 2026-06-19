@@ -18,7 +18,6 @@ export default class ErrorBoundary extends React.Component<Props, State> {
   }
 
   componentDidCatch(error: unknown) {
-    // Keep console logging for debugging in dev
     // eslint-disable-next-line no-console
     console.error('App crashed:', error)
   }
@@ -26,13 +25,13 @@ export default class ErrorBoundary extends React.Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center p-6">
-          <div className="max-w-xl w-full glass rounded-2xl p-6">
-            <h1 className="text-xl font-bold mb-2">Halaman error</h1>
-            <p className="text-slate-600 dark:text-slate-400 mb-4">
+        <div className="min-h-screen flex items-center justify-center p-6 bg-comic-cream">
+          <div className="max-w-xl w-full comic-panel p-6 bg-comic-cream">
+            <h1 className="font-bangers text-xl text-comic-black mb-2">Halaman error</h1>
+            <p className="text-comic-black font-comic mb-4">
               Ada error JavaScript yang bikin halaman tidak tampil.
             </p>
-            <pre className="text-xs whitespace-pre-wrap bg-black/5 dark:bg-white/5 rounded-xl p-4 overflow-auto">
+            <pre className="text-xs whitespace-pre-wrap comic-border bg-comic-white rounded-xl p-4 overflow-auto text-comic-black font-mono">
               {this.state.message || 'Unknown error'}
             </pre>
           </div>

@@ -1,383 +1,227 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { ArrowRight, Code, Palette, Zap, Github, Linkedin, Mail, Sparkles } from 'lucide-react'
+import {
+  ArrowRight, ArrowUpRight, Github, Linkedin, Mail,
+  MapPin, Layers, Zap, Smartphone, Star
+} from 'lucide-react'
 import HeroPortrait from '../components/HeroPortrait'
-import ScatteredPhotos from '../components/ScatteredPhotos'
+import SpotifyWidget from '../components/SpotifyWidget'
 import { useLanguage } from '../context/LanguageContext'
 
-const Home: React.FC = () => {
-  const { t, language } = useLanguage()
-  const [typedText, setTypedText] = useState('')
-  
-  const roles = [
-    t('home.role1'),
-    t('home.role2'),
-    t('home.role3'),
-    t('home.role4')
-  ]
-  
-  const [roleIndex, setRoleIndex] = useState(0)
-  const [isDeleting, setIsDeleting] = useState(false)
+const stats = [
+  { value: '03+', label: 'Projects', color: 'bg-comic-red', text: 'text-white' },
+  { value: '2yr', label: 'Experience', color: 'bg-comic-yellow', text: 'text-comic-black' },
+  { value: '10+', label: 'Tech stack', color: 'bg-comic-black', text: 'text-white' },
+]
+
+const skills = [
+  { icon: <Layers className="w-5 h-5" />, label: 'React / TypeScript', desc: 'Component-driven, typed, production-ready.', color: 'card-comic-red' },
+  { icon: <Zap className="w-5 h-5" />, label: 'UI Motion', desc: 'Anime.js animations that feel intentional.', color: 'card-comic-yellow' },
+  { icon: <Smartphone className="w-5 h-5" />, label: 'Responsive Craft', desc: 'Layouts that breathe from mobile to desktop.', color: 'card-comic-black' },
+]
+
+const works = [
+  { no: '01', title: 'Interface systems', desc: 'Structured React builds with motion and intentional front-end architecture.', bg: 'bg-comic-yellow' },
+  { no: '02', title: 'Visual direction', desc: 'Turning ideas into tactile UI with atmosphere, spacing discipline, and storytelling.', bg: 'bg-comic-red' },
+  { no: '03', title: 'Fast iteration', desc: 'From concept to polished prototype quickly, while keeping the result production-ready.', bg: 'bg-comic-white' },
+]
+
+function useTyping(words: string[]) {
+  const [text, setText] = useState('')
+  const [wordIdx, setWordIdx] = useState(0)
+  const [deleting, setDeleting] = useState(false)
 
   useEffect(() => {
-    const currentRole = roles[roleIndex]
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        if (typedText.length < currentRole.length) {
-          setTypedText(currentRole.slice(0, typedText.length + 1))
-        } else {
-          setTimeout(() => setIsDeleting(true), 2000)
-        }
+    const word = words[wordIdx]
+    const delay = deleting ? 40 : 88
+    const t = window.setTimeout(() => {
+      if (!deleting) {
+        if (text.length < word.length) setText(word.slice(0, text.length + 1))
+        else window.setTimeout(() => setDeleting(true), 1600)
+      } else if (text.length > 0) {
+        setText(word.slice(0, text.length - 1))
       } else {
-        if (typedText.length > 0) {
-          setTypedText(currentRole.slice(0, typedText.length - 1))
-        } else {
-          setIsDeleting(false)
-          setRoleIndex((prev) => (prev + 1) % roles.length)
-        }
+        setDeleting(false)
+        setWordIdx((i) => (i + 1) % words.length)
       }
-    }, isDeleting ? 50 : 100)
+    }, delay)
+    return () => window.clearTimeout(t)
+  }, [deleting, text, wordIdx, words])
 
-    return () => clearTimeout(timeout)
-  }, [typedText, isDeleting, roleIndex, roles])
+  return text
+}
+
+const Home: React.FC = () => {
+  const { t } = useLanguage()
+  const roles = [t('home.role1'), t('home.role2'), t('home.role3'), t('home.role4')]
+  const typed = useTyping(roles)
 
   return (
-    <div className="space-y-20">
-      {/* Scattered photos background */}
-      <ScatteredPhotos />
-      
-      {/* Hero Section */}
-      <section className="mx-auto max-w-4xl text-center py-20 relative">
-        {/* Floating particles with improved animations */}
-        <motion.div
-          animate={{ 
-            y: [0, -30, 0],
-            rotate: [0, 360],
-            scale: [1, 1.2, 1]
-          }}
-          transition={{ 
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-            times: [0, 0.5, 1]
-          }}
-          className="absolute top-10 right-10 text-4xl opacity-60"
-        >
-          ✨
-        </motion.div>
-        <motion.div
-          animate={{ 
-            y: [0, 25, 0],
-            rotate: [360, 0],
-            scale: [1, 0.8, 1],
-            x: [0, 10, 0]
-          }}
-          transition={{ 
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-            times: [0, 0.5, 1]
-          }}
-          className="absolute bottom-20 left-10 text-4xl opacity-60"
-        >
-          🚀
-        </motion.div>
-        <motion.div
-          animate={{ 
-            rotate: [0, 180, 360],
-            scale: [1, 1.5, 1],
-            opacity: [0.3, 0.7, 0.3]
-          }}
-          transition={{ 
-            duration: 10,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute top-1/2 left-20 text-3xl"
-        >
-          ⭐
-        </motion.div>
+    <div className="space-y-16 py-8">
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="flex flex-col items-center gap-4">
-            <HeroPortrait />
-            <motion.h1 
-            className="text-5xl md:text-7xl font-bold mb-2"
-            initial={{ opacity: 0, scale: 0.8, y: 50 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ 
-              duration: 0.8, 
-              delay: 0.1,
-              type: "spring",
-              stiffness: 100,
-              damping: 15
-            }}
-            whileHover={{ 
-              scale: 1.05,
-              transition: { duration: 0.3 }
-            }}
-          >
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-            >
-              {t('home.greeting')}{' '}
-            </motion.span>
-            <motion.span 
-              className="bg-gradient-to-r from-gray-200 via-white to-gray-300 bg-clip-text text-transparent"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ 
-                delay: 0.6,
-                duration: 0.8,
-                type: "spring",
-                stiffness: 80
-              }}
-              whileHover={{
-                backgroundSize: "200% 200%",
-                transition: { duration: 0.5 }
-              }}
-            >
-              {t('home.name')}
-            </motion.span>
-            </motion.h1>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-              className="text-center space-y-2"
-            >
-              <p className="text-lg md:text-xl text-gray-300 font-semibold">
-                {t('home.school')}
-              </p>
-              <p className="text-base md:text-lg text-gray-400">
-                {t('home.major')}
-              </p>
-            </motion.div>
+      {/* ── HERO ─────────────────────────────────────── */}
+      <section className="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
+        <div>
+          <div className="mb-5 flex flex-wrap items-center gap-3 animate-fade-in-up">
+            <span className="section-label">
+              <Star className="w-3 h-3" /> Creative Developer
+            </span>
+            <span className="flex items-center gap-1 font-bangers text-xs uppercase tracking-wider text-comic-red">
+              <MapPin className="h-3 w-3" /> Magelang, Indonesia
+            </span>
           </div>
-          
-          <motion.div 
-            className="text-xl md:text-2xl text-slate-300 mb-8 h-8 flex items-center justify-center gap-2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <Sparkles className="w-6 h-6 text-gray-400" />
-            <span>{typedText}</span>
-            <span className="animate-pulse">|</span>
-          </motion.div>
 
-          <motion.p 
-            className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-          >
-            {t('home.intro')}
-          </motion.p>
-          
-          <motion.p 
-            className="text-base text-slate-400 mb-12 max-w-xl mx-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-          >
-            {t('home.description')}
-          </motion.p>
+          <h1 className="font-bangers text-[clamp(3.2rem,8vw,6.8rem)] leading-[0.86] text-comic-black tracking-tight animate-fade-in-up delay-100">
+            Ersaf{' '}<span className="text-comic-red">Sirazi</span>{' '}Arifin
+          </h1>
 
-          <motion.div 
-            className="flex flex-row gap-6 justify-center items-center mt-8"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ 
-              duration: 0.6, 
-              delay: 0.8,
-              type: "spring",
-              stiffness: 100
-            }}
-          >
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Link 
-                to="/projects"
-                className="px-8 py-4 bg-gradient-to-r from-gray-700 to-gray-500 text-white rounded-3xl font-semibold shadow-xl transition-all duration-300 flex items-center gap-2 relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-gray-400"
-              >
-                {/* aura gradient removed for hover */}
-                <motion.span className="relative z-10">{t('home.cta.projects')}</motion.span>
-                <motion.div className="relative z-10">
-                  <ArrowRight className="w-5 h-5" />
-                </motion.div>
-              </Link>
-            </motion.div>
-            <motion.div
-              whileHover={{ 
-                scale: 1.05,
-                backdropFilter: "blur(20px)"
-              }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Link 
-                to="/contact"
-                className="px-8 py-4 glass rounded-xl font-semibold hover:shadow-xl transition-all duration-300 backdrop-blur-sm border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-gray-400"
-              >
-                {t('home.cta.contact')}
-              </Link>
-            </motion.div>
-          </motion.div>
-        </motion.div>
+          <div className="mt-5 inline-flex items-center gap-2 px-4 py-2 card-comic bg-comic-white animate-fade-in-up delay-200">
+            <span className="font-mono text-xs text-comic-black opacity-50">role &#x25B8;</span>
+            <span className="font-mono text-sm font-bold text-comic-black">{typed}</span>
+            <span className="font-mono text-sm text-comic-red animate-pulse">_</span>
+          </div>
+
+          <div className="mt-7 max-w-xl animate-fade-in-up delay-300">
+            <div className="speech-bubble p-5">
+              <p className="text-base leading-7 text-comic-black font-comic">{t('home.intro')}</p>
+            </div>
+          </div>
+
+          <div className="mt-8 flex flex-wrap gap-3 animate-fade-in-up delay-400">
+            <Link to="/projects" className="btn-comic bg-comic-red text-white px-6 py-3">
+              {t('home.cta.projects')} <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link to="/contact" className="btn-comic bg-comic-yellow text-comic-black px-6 py-3">
+              {t('home.cta.contact')} <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+
+        <div className="flex flex-col items-center gap-4 animate-fade-in-up delay-200">
+          <div className="relative">
+            <div className="action-lines" />
+            <div className="comic-panel-thick overflow-hidden bg-comic-yellow">
+              <HeroPortrait size={320} />
+            </div>
+            <span className="onomatopoeia-bam absolute -top-5 -right-5 z-10">BAM!</span>
+          </div>
+          <SpotifyWidget />
+        </div>
       </section>
 
-      {/* Features Section */}
-      <section className="mx-auto max-w-5xl">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ 
-            duration: 0.8,
-            type: "spring",
-            stiffness: 100
-          }}
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <motion.h2 
-            className="text-3xl font-bold text-center mb-12"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            viewport={{ once: true }}
+      {/* ── STAT CARDS ────────────────────────────────── */}
+      <section className="grid grid-cols-3 gap-4">
+        {stats.map((s, i) => (
+          <div
+            key={s.label}
+            className={`stat-card ${s.color} animate-fade-in-up`}
+            style={{ animationDelay: `${i * 100}ms` }}
           >
-            {t('home.whatido.title')}
-          </motion.h2>
-          <motion.div 
-            className="grid md:grid-cols-3 gap-6"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={{
-              hidden: {},
-              visible: {
-                transition: {
-                  staggerChildren: 0.2
-                }
-              }
-            }}
-          >
-            {[
-              {
-                icon: <Code className="w-8 h-8" />,
-                title: t('home.feature1.title'),
-                desc: t('home.feature1.desc'),
-                gradient: 'from-gray-600 to-gray-400'
-              },
-              {
-                icon: <Palette className="w-8 h-8" />,
-                title: t('home.feature2.title'),
-                desc: t('home.feature2.desc'),
-                gradient: 'from-gray-500 to-gray-300'
-              },
-              {
-                icon: <Zap className="w-8 h-8" />,
-                title: t('home.feature3.title'),
-                desc: t('home.feature3.desc'),
-                gradient: 'from-neutral-600 to-neutral-400'
-              }
-            ].map((item, idx) => (
-              <motion.div
-                key={idx}
-                variants={{
-                  hidden: { opacity: 0, y: 60, scale: 0.9 },
-                  visible: { 
-                    opacity: 1, 
-                    y: 0, 
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 100,
-                      damping: 15
-                    }
-                  }
-                }}
-                whileHover={{ 
-                  y: -12, 
-                  scale: 1.02,
-                  boxShadow: "0 25px 50px rgba(0, 0, 0, 0.15)",
-                  transition: { duration: 0.3 }
-                }}
-                className="glass rounded-2xl p-8 hover:shadow-2xl transition-all duration-300 group cursor-pointer"
-              >
-                <motion.div 
-                  className={`inline-block p-3 rounded-xl bg-gradient-to-r ${item.gradient} text-white mb-4`}
-                  whileHover={{ 
-                    scale: 1.2,
-                    rotate: 5,
-                    transition: { duration: 0.3 }
-                  }}
-                >
-                  {item.icon}
-                </motion.div>
-                <motion.h3 
-                  className="text-xl font-bold mb-3"
-                  whileHover={{ color: "#d1d5db" }}
-                >
-                  {item.title}
-                </motion.h3>
-                <p className="text-gray-400">{item.desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
+            <span className={`stat-val ${s.text}`}>{s.value}</span>
+            <span className={`stat-lbl ${s.text === 'text-white' ? 'text-white opacity-80' : ''}`}>{s.label}</span>
+          </div>
+        ))}
       </section>
 
-      {/* CTA Section */}
-      <section className="mx-auto max-w-4xl">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="glass rounded-3xl p-12 text-center"
-        >
-          <h2 className="text-3xl font-bold mb-4">{t('home.cta.title')}</h2>
-          <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
+      {/* ── WHAT I DO — BENTO GRID ────────────────────── */}
+      <section>
+        <div className="mb-8 animate-fade-in-up">
+          <span className="section-label">What I do</span>
+          <h2 className="mt-4 font-bangers text-[clamp(2rem,5vw,3.8rem)] text-comic-black tracking-tight">
+            Building products that feel cinematic, tactile, and ready to ship.
+          </h2>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-3">
+          {works.map((item, i) => (
+            <div
+              key={item.no}
+              className={`card-comic card-comic-${i === 0 ? 'yellow' : i === 1 ? 'red' : 'black'} p-7 flex flex-col gap-4 min-h-[220px] hover:-translate-y-1 transition-transform duration-200 animate-fade-in-up`}
+              style={{ animationDelay: `${200 + i * 100}ms` }}
+            >
+              <div className={`badge-comic ${i === 1 ? 'badge-comic-yellow' : i === 2 ? '' : 'badge-comic-black'}`}>
+                {item.no}
+              </div>
+              <h3 className="font-bangers text-2xl text-comic-black tracking-tight mt-auto">
+                {item.title}
+              </h3>
+              <p className="text-sm leading-7 text-comic-black font-comic opacity-80">
+                {item.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── SKILLS CARDS ─────────────────────────────── */}
+      <section>
+        <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+          <div className="animate-fade-in-up">
+            <span className="section-label">Selected direction</span>
+            <h2 className="mt-4 max-w-2xl font-bangers text-[clamp(2rem,4vw,3.4rem)] text-comic-black tracking-tight">
+              Interfaces should feel personal before they feel expensive.
+            </h2>
+          </div>
+          <Link
+            to="/projects"
+            className="btn-comic bg-comic-yellow text-comic-black px-4 py-2 text-sm"
+          >
+            See work <ArrowUpRight className="h-4 h-4" />
+          </Link>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-3">
+          {skills.map((skill, i) => (
+            <div
+              key={skill.label}
+              className={`card-comic ${skill.color} p-7 flex flex-col gap-5 hover:-translate-y-1 transition-transform duration-200 animate-fade-in-up`}
+              style={{ animationDelay: `${200 + i * 100}ms` }}
+            >
+              <div className="icon-box icon-box-red">
+                {skill.icon}
+              </div>
+              <div>
+                <div className="font-bangers text-xl text-comic-black tracking-tight">{skill.label}</div>
+                <p className="mt-2 text-sm leading-7 text-comic-black font-comic opacity-80">{skill.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── CTA PANEL ─────────────────────────────────── */}
+      <section className="relative overflow-hidden profile-card p-8 md:p-12 animate-fade-in-up">
+        <div className="action-lines opacity-40" />
+        <span className="onomatopoeia-pow absolute top-6 right-6 text-5xl z-10">POW!</span>
+
+        <div className="relative z-10 max-w-3xl">
+          <span className="section-label">Let&apos;s work together</span>
+          <h2 className="mt-4 font-bangers text-[clamp(2.8rem,7vw,6rem)] text-comic-black tracking-tight leading-[0.9]">
+            {t('home.cta.title')}
+          </h2>
+          <p className="mt-5 max-w-xl text-base leading-7 text-comic-black font-comic">
             {t('home.cta.description')}
           </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <a 
-              href="https://github.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-3 glass rounded-xl hover:scale-110 transition-transform"
-            >
-              <Github className="w-6 h-6" />
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link to="/contact" className="btn-comic bg-comic-black text-white px-6 py-3">
+              Get in touch <ArrowRight className="h-4 w-4" />
+            </Link>
+            <a href="https://github.com/ersaf1" target="_blank" rel="noopener noreferrer"
+               className="btn-comic bg-comic-white text-comic-black px-5 py-3">
+              <Github className="h-4 w-4" /> GitHub
             </a>
-            <a 
-              href="https://linkedin.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-3 glass rounded-xl hover:scale-110 transition-transform"
-            >
-              <Linkedin className="w-6 h-6" />
+            <a href="https://www.linkedin.com/in/ersaf-arifin-57190b33b" target="_blank" rel="noopener noreferrer"
+               className="btn-comic bg-comic-white text-comic-black px-5 py-3">
+              <Linkedin className="h-4 w-4" /> LinkedIn
             </a>
-            <a 
-              href="mailto:ersafrexx@gmail.com"
-              className="p-3 glass rounded-xl hover:scale-110 transition-transform"
-            >
-              <Mail className="w-6 h-6" />
+            <a href="mailto:ersafrexx@gmail.com"
+               className="btn-comic bg-comic-white text-comic-black px-5 py-3">
+              <Mail className="h-4 w-4" /> Email
             </a>
           </div>
-        </motion.div>
+        </div>
       </section>
+
     </div>
   )
 }

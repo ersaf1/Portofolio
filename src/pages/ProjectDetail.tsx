@@ -1,178 +1,120 @@
 import React from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { ArrowLeft, Github, ExternalLink, Calendar, Tag } from 'lucide-react'
+import { useParams, Link, useNavigate } from 'react-router-dom'
+import { ArrowLeft, Github, ExternalLink, Tag } from 'lucide-react'
 import { projects } from '../data/projects'
 
 const ProjectDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>()
-  const project = projects.find((p) => p.id === id)
+  const navigate = useNavigate()
+  const project = projects.find(p => p.id === id)
 
-  if (!project) {
-    return (
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mx-auto max-w-2xl text-center py-20"
-      >
-        <h2 className="text-3xl font-bold mb-4">Project Not Found</h2>
-        <p className="text-slate-600 dark:text-slate-400 mb-6">
-          Sorry, the project you're looking for doesn't exist.
-        </p>
-        <Link
-          to="/projects"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-700 to-gray-500 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          Back to Projects
+  if (!project) return (
+    <div className="min-h-[60vh] flex flex-col items-center justify-center text-center gap-6 px-4">
+      <div className="space-y-4">
+        <p className="text-sm font-mono text-comic-black opacity-50">project not found</p>
+        <Link to="/projects" className="btn-comic px-5 py-2.5 text-sm bg-comic-yellow text-comic-black">
+          <ArrowLeft className="w-4 h-4" /> Back to projects
         </Link>
-      </motion.section>
-    )
-  }
+      </div>
+    </div>
+  )
 
   return (
-    <motion.article
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="mx-auto max-w-4xl space-y-8"
-    >
-      {/* Back Button */}
-      <Link
-        to="/projects"
-        className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+    <div className="max-w-4xl mx-auto py-16 px-4 space-y-10">
+
+      {/* Back */}
+      <button
+        onClick={() => navigate(-1)}
+        className="flex items-center gap-2 text-xs font-mono text-comic-black opacity-50 hover:opacity-100 transition-colors"
       >
-        <ArrowLeft className="w-4 h-4" />
-        Back to Projects
-      </Link>
+        <ArrowLeft className="w-3.5 h-3.5" /> back
+      </button>
 
-      {/* Hero */}
-      <div className="glass rounded-3xl p-8 md:p-12">
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="text-4xl md:text-5xl font-bold mb-4 gradient-text"
-        >
+      {/* Title block */}
+      <div>
+        <span className="speech-bubble inline-block px-3 py-1 text-xs font-bangers uppercase tracking-wider text-comic-black mb-3">
+          Project
+        </span>
+        <h1 className="font-bangers text-[clamp(2rem,5vw,3.5rem)] text-comic-black mb-4 tracking-tight">
           {project.title}
-        </motion.h1>
+        </h1>
+        <p className="text-comic-black font-comic text-lg max-w-xl leading-relaxed">{project.summary}</p>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-lg text-slate-600 dark:text-slate-300 mb-6"
-        >
-          {project.summary}
-        </motion.p>
-
-        {/* Meta Info */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="flex flex-wrap gap-4 mb-8"
-        >
-          <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-            <Calendar className="w-4 h-4" />
-            <span>2024</span>
-          </div>
-          <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-            <Tag className="w-4 h-4" />
-            <span>Personal Project</span>
-          </div>
-        </motion.div>
-
-        {/* Action Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="flex flex-wrap gap-3"
-        >
+        {/* Links */}
+        <div className="flex flex-wrap gap-3 mt-8">
           {project.repo && (
             <a
               href={project.repo}
               target="_blank"
-              rel="noreferrer"
-              className="px-6 py-3 glass rounded-xl font-medium hover:shadow-lg transition-all flex items-center gap-2"
+              rel="noopener noreferrer"
+              className="btn-comic px-5 py-2.5 text-sm bg-comic-yellow text-comic-black"
+              aria-label="View source on GitHub"
             >
-              <Github className="w-5 h-5" />
-              View Code
+              <Github className="w-4 h-4" /> Source Code
             </a>
           )}
           {project.demo && (
             <a
               href={project.demo}
               target="_blank"
-              rel="noreferrer"
-              className="px-6 py-3 bg-gradient-to-r from-gray-700 to-gray-500 text-white rounded-xl font-semibold hover:shadow-lg transition-all flex items-center gap-2"
+              rel="noopener noreferrer"
+              className="btn-comic px-5 py-2.5 text-sm bg-comic-red text-white"
+              aria-label="View live demo"
             >
-              <ExternalLink className="w-5 h-5" />
-              Live Demo
+              <ExternalLink className="w-4 h-4" /> Live Demo
             </a>
           )}
-        </motion.div>
+        </div>
       </div>
 
-      {/* Description */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="glass rounded-3xl p-8"
-      >
-        <h2 className="text-2xl font-bold mb-4">About This Project</h2>
-        <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-          {project.description}
-        </p>
-      </motion.div>
+      <div className="border-t-4 border-comic-red" />
 
-      {/* Tech Stack */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-        className="glass rounded-3xl p-8"
-      >
-        <h2 className="text-2xl font-bold mb-6">Technologies Used</h2>
-        <div className="flex flex-wrap gap-3">
-          {project.tech.map((tech, idx) => (
+      {/* Description */}
+      <div className="comic-panel p-8 bg-comic-cream">
+        <span className="font-bangers text-sm uppercase tracking-wider text-comic-black block mb-5">About this project</span>
+        <p className="text-sm text-comic-black font-comic leading-relaxed whitespace-pre-line">{project.description}</p>
+      </div>
+
+      {/* Tech stack */}
+      <div className="comic-panel p-8 bg-comic-cream">
+        <div className="flex items-center gap-2 mb-6">
+          <Tag className="w-3.5 h-3.5 text-comic-black opacity-40" />
+          <span className="font-bangers text-sm uppercase tracking-wider text-comic-black">Tech Stack</span>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {project.tech.map((tech) => (
             <span
-              key={idx}
-              className="px-4 py-2 bg-white/10 border border-white/10 rounded-xl font-medium"
+              key={tech}
+              className="tag-comic"
             >
               {tech}
             </span>
           ))}
         </div>
-      </motion.div>
+      </div>
 
-      {/* Project Image Placeholder */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7 }}
-        className="glass rounded-3xl p-8"
-      >
-        <div className={`w-full rounded-2xl flex items-center justify-center overflow-hidden min-h-[300px] ${
-          project.image ? 'bg-slate-800' : 'bg-gradient-to-br from-gray-700/20 to-gray-600/20'
-        }`}>
-          {project.image ? (
-            <img 
-              src={project.image} 
-              alt={project.title} 
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <div className="text-center">
-              <div className="text-8xl mb-4">🚀</div>
-              <p className="text-slate-500 dark:text-slate-400">Project Screenshot</p>
-            </div>
-          )}
+      {/* More projects */}
+      <div>
+        <span className="font-bangers text-sm uppercase tracking-wider text-comic-black block mb-5">More projects</span>
+        <div className="grid sm:grid-cols-2 gap-3">
+          {projects.filter(p => p.id !== project.id).slice(0, 2).map(p => (
+            <Link
+              key={p.id}
+              to={`/projects/${p.id}`}
+              className="comic-panel p-5 group bg-comic-white hover:border-comic-red transition-all"
+            >
+              <h3 className="font-bangers text-sm text-comic-black group-hover:text-comic-red transition-colors mb-2 tracking-tight">
+                {p.title}
+              </h3>
+              <p className="text-xs text-comic-black font-comic line-clamp-2 leading-relaxed mb-3 opacity-70">{p.summary}</p>
+              <div className="flex flex-wrap gap-1.5">
+                {p.tech.slice(0, 3).map(t => <span key={t} className="tag-comic">{t}</span>)}
+              </div>
+            </Link>
+          ))}
         </div>
-      </motion.div>
-    </motion.article>
+      </div>
+    </div>
   )
 }
 

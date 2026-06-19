@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
 
 const HeroPortrait: React.FC<{ size?: number; className?: string }> = ({ size = 260, className = '' }) => {
   const [imgError, setImgError] = useState(false)
@@ -7,22 +6,19 @@ const HeroPortrait: React.FC<{ size?: number; className?: string }> = ({ size = 
   const profileSrc = `${import.meta.env.BASE_URL}profile.png?v=2026-01-22`
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.6 }}
+    <div
       className={`relative ${className}`}
       style={{ width: size, height: size }}
     >
       {/* Glow */}
       <div className="absolute -inset-6 rounded-[40%] bg-gradient-to-tr from-white/10 via-gray-400/10 to-white/5 blur-2xl" />
-      
+
       {/* Container for image/blob */}
       <div className="relative z-10 w-full h-full rounded-[40%] bg-gradient-to-br from-gray-700 via-gray-600 to-gray-800 overflow-hidden flex items-center justify-center">
         {!imgError ? (
-          <img 
-            src={profileSrc} 
-            alt="Profile" 
+          <img
+            src={profileSrc}
+            alt="Profile"
             className="w-full h-full object-cover"
             onError={() => setImgError(true)}
           />
@@ -32,10 +28,10 @@ const HeroPortrait: React.FC<{ size?: number; className?: string }> = ({ size = 
           </div>
         )}
       </div>
-      
+
       {/* Soft shadow */}
       <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-3/4 h-8 rounded-full bg-black/20 blur-xl" />
-    </motion.div>
+    </div>
   )
 }
 

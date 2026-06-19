@@ -1,10 +1,29 @@
-import React, { useState, useRef } from 'react'
-import { motion } from 'framer-motion'
+import React, { useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
-import { Mail, MessageSquare, Send, CheckCircle, Github, Linkedin, Instagram } from 'lucide-react'
-import HeroPortrait from '../components/HeroPortrait'
-import ScatteredPhotos from '../components/ScatteredPhotos'
+import { Mail, Send, CheckCircle, Github, Linkedin, Instagram, ArrowUpRight, PhoneCall, MessageCircle, Phone } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
+
+const SOCIALS = [
+  { icon: <Github className="w-4 h-4" />, href: 'https://github.com/ersaf1', label: 'GitHub', username: '@ersaf1', accent: 'card-comic-black' },
+  { icon: <Linkedin className="w-4 h-4" />, href: 'https://www.linkedin.com/in/ersaf-arifin-57190b33b', label: 'LinkedIn', username: 'Ersaf Arifin', accent: 'card-comic-red' },
+  { icon: <Instagram className="w-4 h-4" />, href: 'https://instagram.com/3rsapp', label: 'Instagram', username: '@3rsapp', accent: 'card-comic-yellow' },
+]
+
+function SocialLink({ s, delay }: { s: typeof SOCIALS[number]; delay: number }) {
+  return (
+    <a
+      href={s.href} target="_blank" rel="noopener noreferrer"
+      className={`card-comic ${s.accent} flex items-center gap-4 p-4 group bg-comic-white animate-fade-in-up`}
+      style={{ animationDelay: `${delay}ms` }}>
+      <div className="icon-box shrink-0 w-9 h-9 text-sm">{s.icon}</div>
+      <div className="flex-1 min-w-0">
+        <div className="font-bangers text-xs uppercase tracking-wider text-comic-black">{s.label}</div>
+        <div className="text-xs font-bold text-comic-black truncate">{s.username}</div>
+      </div>
+      <ArrowUpRight className="h-3.5 w-3.5 text-comic-black opacity-30 group-hover:opacity-100 shrink-0 transition-opacity" />
+    </a>
+  )
+}
 
 const Contact: React.FC = () => {
   const { t } = useLanguage()
@@ -14,187 +33,163 @@ const Contact: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null)
 
   return (
-    <div className="mx-auto max-w-5xl space-y-12">
-      {/* Scattered photos background */}
-      <ScatteredPhotos />
-      
-      {/* Header */}
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="text-center"
-      >
-        <div className="flex flex-col items-center gap-6 mb-2">
-          <HeroPortrait size={180} />
-          <h1 className="text-4xl md:text-5xl font-bold">
-          {t('contact.title')} <span className="gradient-text">{t('contact.title.highlight')}</span>
+    <div className="space-y-8 py-8">
+
+      {/* HERO */}
+      <section className="profile-card p-7 md:p-10 relative overflow-hidden">
+        <div className="action-lines opacity-20" />
+        <span className="onomatopoeia-pow absolute top-4 right-6 text-5xl z-10">ZAP!</span>
+        <div className="relative z-10 max-w-3xl animate-fade-in-up" style={{ animationDelay: '0ms' }}>
+          <span className="section-label"><MessageCircle className="w-3 h-3" /> Get in touch</span>
+          <h1 className="mt-4 font-bangers text-[clamp(3rem,7vw,5.5rem)] text-comic-black tracking-tight leading-[0.9]">
+            {t('contact.title')}{' '}
+            <span className="text-comic-red">{t('contact.title.highlight')}</span>
           </h1>
+          <p className="mt-5 max-w-2xl text-sm leading-7 text-comic-black font-comic md:text-base">
+            {t('contact.subtitle')}
+          </p>
         </div>
-        <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-          {t('contact.subtitle')}
-        </p>
-      </motion.section>
+      </section>
 
-      <div className="grid md:grid-cols-2 gap-8">
-        {/* Contact Info */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="space-y-6"
-        >
-          <div className="glass rounded-2xl p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <MessageSquare className="w-6 h-6 text-gray-400" />
-              <h2 className="text-2xl font-bold">{t('contact.info.title')}</h2>
+      <div className="grid gap-6 lg:grid-cols-[380px_1fr]">
+
+        {/* LEFT COLUMN */}
+        <div className="space-y-4">
+
+          {/* Email card */}
+          <a href="mailto:ersafrexx@gmail.com"
+            className="card-comic card-comic-red p-5 flex items-center gap-4 group bg-comic-white animate-fade-in-up"
+            style={{ animationDelay: '50ms' }}>
+            <div className="icon-box icon-box-red shrink-0">
+              <Mail className="h-4 w-4" />
             </div>
-            <p className="text-slate-600 dark:text-slate-400 mb-6">
-              {t('contact.info.description')}
-            </p>
-
-            <div className="space-y-4">
-              <a
-                href="mailto:ersafrexx@gmail.com"
-                className="flex items-center gap-3 p-4 glass rounded-xl hover:shadow-lg transition-all group"
-              >
-                <Mail className="w-5 h-5 text-gray-400 group-hover:scale-110 transition-transform" />
-                <div>
-                  <div className="text-sm text-slate-500 dark:text-slate-400">Email</div>
-                  <div className="font-medium">ersafrexx@gmail.com</div>
-                </div>
-              </a>
+            <div className="flex-1 min-w-0">
+              <div className="font-bangers text-xs uppercase tracking-wider text-comic-black mb-1">Email</div>
+              <div className="text-sm font-bold text-comic-black truncate">ersafrexx@gmail.com</div>
             </div>
+            <ArrowUpRight className="h-4 w-4 text-comic-black opacity-30 group-hover:opacity-100 shrink-0 transition-opacity" />
+          </a>
 
-            <div className="mt-8">
-              <h3 className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-4">
-                {t('contact.social.title')}
-              </h3>
-              <div className="grid grid-cols-1 gap-3">
-                {[
-                  { icon: <Github className="w-5 h-5" />, href: 'https://github.com/ersaf1', label: t('contact.social.github'), username: '@ersaf1' },
-                  { icon: <Linkedin className="w-5 h-5" />, href: 'https://linkedin.com', label: t('contact.social.linkedin'), username: 'Ersaf Sirazi Arifin' },
-                  { icon: <Instagram className="w-5 h-5" />, href: 'https://instagram.com/3rsapp', label: t('contact.social.instagram'), username: '@3rsapp' }
-                ].map((social, idx) => (
-                  <a
-                    key={idx}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-4 glass rounded-xl hover:shadow-lg transition-all group"
-                  >
-                    <div className="text-gray-400 group-hover:scale-110 transition-transform">
-                      {social.icon}
-                    </div>
-                    <div>
-                      <div className="text-sm text-slate-500 dark:text-slate-400">{social.label}</div>
-                      <div className="font-medium">{social.username}</div>
-                    </div>
-                  </a>
-                ))}
+          {/* Phone card */}
+          <a href="tel:+6282227166906"
+            className="card-comic card-comic-yellow p-5 flex items-center gap-4 group bg-comic-white animate-fade-in-up"
+            style={{ animationDelay: '75ms' }}>
+            <div className="icon-box icon-box-yellow shrink-0">
+              <Phone className="h-4 w-4" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="font-bangers text-xs uppercase tracking-wider text-comic-black mb-1">Phone</div>
+              <div className="text-sm font-bold text-comic-black truncate">+62 822-2716-6906</div>
+            </div>
+            <ArrowUpRight className="h-4 w-4 text-comic-black opacity-30 group-hover:opacity-100 shrink-0 transition-opacity" />
+          </a>
+
+          {/* Response style card */}
+          <div className="card-comic card-comic-yellow p-5 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+            <div className="flex items-start gap-4">
+              <div className="icon-box shrink-0"><PhoneCall className="h-4 w-4" /></div>
+              <div>
+                <div className="font-bangers text-sm uppercase tracking-wider text-comic-black mb-2">Response style</div>
+                <p className="text-xs leading-relaxed text-comic-black font-comic">
+                  Best for freelance inquiries, collaborations, UI feedback, and portfolio discussions.
+                </p>
               </div>
             </div>
           </div>
-        </motion.div>
 
-        {/* Contact Form */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
+          {/* Socials */}
+          <div className="card-comic card-comic-black p-5 animate-fade-in-up" style={{ animationDelay: '150ms' }}>
+            <div className="font-bangers text-sm uppercase tracking-wider text-comic-black mb-4">{t('contact.social.title')}</div>
+            <div className="space-y-3">
+              {SOCIALS.map((s, i) => (
+                <SocialLink key={s.label} s={s} delay={180 + i * 60} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* FORM CARD */}
+        <div className="card-comic card-comic-black p-7 md:p-8 animate-fade-in-up" style={{ animationDelay: '120ms' }}>
           {submitted ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="glass rounded-2xl p-12 text-center h-full flex flex-col items-center justify-center"
-            >
-              <CheckCircle className="w-16 h-16 text-white mb-4" />
-              <h3 className="text-2xl font-bold mb-2">{t('contact.form.success.title')}</h3>
-              <p className="text-slate-600 dark:text-slate-400 mb-6">
+            <div className="flex min-h-[480px] flex-col items-center justify-center text-center animate-scale-in">
+              <div className="icon-box icon-box-red w-20 h-20 mx-auto mb-6">
+                <CheckCircle className="h-10 w-10" />
+              </div>
+              <h3 className="font-bangers text-[clamp(2rem,4vw,3rem)] text-comic-black tracking-tight">
+                {t('contact.form.success.title')}
+              </h3>
+              <p className="mt-4 max-w-md text-sm leading-7 text-comic-black font-comic">
                 {t('contact.form.success.message')}
               </p>
-              <button
-                onClick={() => setSubmitted(false)}
-                className="px-6 py-2 glass rounded-xl hover:shadow-lg transition-all"
-              >
+              <button onClick={() => setSubmitted(false)}
+                className="btn-comic mt-6 bg-comic-yellow text-comic-black px-5 py-3">
                 {t('contact.form.success.button')}
               </button>
-            </motion.div>
+            </div>
           ) : (
             <form
               ref={formRef}
               onSubmit={async (e) => {
-                e.preventDefault()
-                setError(null)
-                setLoading(true)
+                e.preventDefault(); setError(null); setLoading(true)
                 if (!formRef.current) return
-
                 try {
-                  // Ganti dengan Service ID, Template ID dan Public Key dari EmailJS Anda
-                  // Buat akun di https://www.emailjs.com/
-                  const serviceId = 'service_17875m8'
-                  const templateId = 'template_a8pxdjm' 
-                  const publicKey = '9zbYFy_ilaYAZac-J'
-
-                  await emailjs.sendForm(serviceId, templateId, formRef.current, publicKey)
-                  
-                  setSubmitted(true)
-                  formRef.current.reset()
-                } catch (err) {
-                  console.error(err)
-                  setError('Gagal mengirim pesan. Pastikan konfigurasi EmailJS sudah benar atau kirim manual ke ersafrexx@gmail.com')
-                } finally {
-                  setLoading(false)
-                }
+                  await emailjs.sendForm('service_17875m8', 'template_a8pxdjm', formRef.current, '9zbYFy_ilaYAZac-J')
+                  setSubmitted(true); formRef.current.reset()
+                } catch {
+                  setError('Gagal mengirim. Kirim langsung ke ersafrexx@gmail.com')
+                } finally { setLoading(false) }
               }}
-              className="glass rounded-2xl p-8 space-y-6"
+              className="space-y-5"
             >
               <div>
-                <label className="block text-sm font-medium mb-2">{t('contact.form.name')}</label>
-                <input
-                  name="name"
-                  required
-                  className="w-full px-4 py-3 glass rounded-xl focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
-                />
+                <span className="section-label block mb-3">Send a message</span>
+                <h2 className="font-bangers text-[clamp(2rem,4vw,3.2rem)] text-comic-black tracking-tight">
+                  A more thoughtful start to the conversation.
+                </h2>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium mb-2">{t('contact.form.email')}</label>
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  className="w-full px-4 py-3 glass rounded-xl focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
-                  placeholder={t('contact.form.email.placeholder')}
-                />
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <label className="font-bangers text-xs uppercase tracking-wider text-comic-black block">
+                    {t('contact.form.name')}
+                  </label>
+                  <input name="name" required className="input-comic" />
+                </div>
+                <div className="space-y-2">
+                  <label className="font-bangers text-xs uppercase tracking-wider text-comic-black block">
+                    {t('contact.form.email')}
+                  </label>
+                  <input type="email" name="email" required
+                    placeholder={t('contact.form.email.placeholder')}
+                    className="input-comic" />
+                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium mb-2">{t('contact.form.message')}</label>
-                <textarea
-                  name="message"
-                  required
-                  rows={5}
-                  className="w-full px-4 py-3 glass rounded-xl focus:outline-none focus:ring-2 focus:ring-white/30 transition-all resize-none"
+              <div className="space-y-2">
+                <label className="font-bangers text-xs uppercase tracking-wider text-comic-black block">
+                  {t('contact.form.message')}
+                </label>
+                <textarea name="message" required rows={7}
                   placeholder={t('contact.form.message.placeholder')}
-                />
+                  className="input-comic resize-none min-h-[200px]" />
               </div>
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full px-6 py-4 bg-gradient-to-r from-gray-700 to-gray-500 text-white rounded-xl font-semibold shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group disabled:opacity-70"
-              >
-                <Send className="w-5 h-5" />
-                {loading ? 'Mengirim…' : t('contact.form.submit')}
+              <div className="highlight-box">
+                Share the project type, timeline, and vibe you want. The clearer the brief, the better the direction.
+              </div>
+
+              <button type="submit" disabled={loading}
+                className="btn-comic w-full bg-comic-red text-white px-6 py-4 disabled:opacity-50">
+                <Send className="h-4 w-4" />
+                {loading ? 'Mengirim...' : t('contact.form.submit')}
               </button>
+
               {error && (
-                <p className="text-gray-400 text-sm mt-2">{error}</p>
+                <p className="text-center text-xs font-mono text-comic-red">{error}</p>
               )}
             </form>
           )}
-        </motion.div>
+        </div>
       </div>
     </div>
   )
